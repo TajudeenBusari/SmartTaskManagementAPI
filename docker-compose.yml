@@ -1,0 +1,6 @@
+﻿services:
+  smarttaskmanagementapi:
+    image: smarttaskmanagementapi
+    build:
+      context: .
+      dockerfile: SmartTaskManagementAPI/Dockerfile

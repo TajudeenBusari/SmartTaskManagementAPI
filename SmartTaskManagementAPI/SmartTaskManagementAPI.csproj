@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Exceptions\" />
+      <Folder Include="System\" />
+      <Folder Include="TaskCategory\controller\" />
+      <Folder Include="TaskCategory\model\dto\" />
+      <Folder Include="TaskCategory\repository\" />
+      <Folder Include="TaskCategory\service\" />
+      <Folder Include="TaskManagement\controller\" />
+      <Folder Include="TaskManagement\repository\" />
+      <Folder Include="TaskManagement\service\" />
+      <Folder Include="TaskUser\controller\" />
+      <Folder Include="TaskUser\repository\" />
+      <Folder Include="TaskUser\service\" />
+    </ItemGroup>
+
+</Project>
