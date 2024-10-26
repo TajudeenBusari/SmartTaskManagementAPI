@@ -1,9 +1,54 @@
+using Microsoft.EntityFrameworkCore;
+using SmartTaskManagementAPI.Data;
+using SmartTaskManagementAPI.Exceptions;
+using SmartTaskManagementAPI.TaskCategory.model;
+using SmartTaskManagementAPI.TaskCategory.repository;
+using SmartTaskManagementAPI.TaskCategory.repository.impl;
+using SmartTaskManagementAPI.TaskCategory.service;
+using SmartTaskManagementAPI.TaskManagement.repository;
+using SmartTaskManagementAPI.TaskManagement.repository.impl;
+using SmartTaskManagementAPI.TaskManagement.service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+//inject controller
+builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+
+//Register Dbcontext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+});
+
+//Register TaskManagement Repository in the DI container
+builder.Services.AddScoped<ITaskManagementRepository, TaskManagementRepository>();
+
+//Register TaskCategory Repository in the DI container
+builder.Services.AddScoped<ITaskCategoryRepository, TaskCategoryRepository>();
+
+//Register the TaskManagement Service in the DI container
+/*
+ * If you don't have an interface for the service,
+ * but instead you are injecting the concrete class TaskManagementService,
+ * you can register it directly:
+ */
+builder.Services.AddScoped<TaskManagementService>();
+
+//Register the TaskCategory Service in the DI container
+builder.Services.AddScoped<TaskCategoryService>();
+
+
+
+
 
 var app = builder.Build();
 
@@ -16,29 +61,29 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+//register middleware
+app.UseMiddleware<ExceptionHandlingMiddleware>();  // Register the custom middleware
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+
+//for authorization and authentication
+app.UseAuthentication();
+app.UseAuthorization();
+
+//add this for swagger to work
+app.MapControllers();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+
+
+/***
+ * To register the ExceptionHandlingMiddleware.cs in your Program.cs file,
+ * you'll need to use the app.UseMiddleware<ExceptionHandlingMiddleware>();
+ * method before the rest of the middleware pipeline executes,
+ * but after app.UseHttpsRedirection() and any authentication-related middleware.
+
+You don't need to register the middleware in the builder.Services.AddScoped<ExceptionHandlingMiddleware>() section 
+because middleware is instantiated per request in the pipeline and does not 
+require DI registration unless it requires dependencies.
+
+ */
