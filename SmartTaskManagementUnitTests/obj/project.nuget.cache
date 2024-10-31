@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iXQjFPp94U3xJWNV0t32xF3ML2dSnXw2TEzkvxG2UCiLRBKR71/J31IqkcTPy860058HZEYAs0Z4s5UR8UABDw==",
+  "dgSpecHash": "fMNzmqgoTaN/7orNOjBYdefX4Jtu8aXxdSsLkv+1yrLCZxiG5NKR2Z+k9wxAK2v2U8ugQGk2bhtv7ZdSAype4g==",
   "success": true,
   "projectFilePath": "C:\\Users\\tajud\\DotnetProjectsAPITest\\SmartTaskManagementAPI\\SmartTaskManagementUnitTests\\SmartTaskManagementUnitTests.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\tajud\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\fluentassertions\\6.12.1\\fluentassertions.6.12.1.nupkg.sha512",
+    "C:\\Users\\tajud\\.nuget\\packages\\fluentvalidation\\11.10.0\\fluentvalidation.11.10.0.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\jetbrains.annotations\\2024.3.0-eap1\\jetbrains.annotations.2024.3.0-eap1.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

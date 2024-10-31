@@ -10,8 +10,21 @@
       &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskManagement.service.TaskManagementServiceTest.GetTaskManagementByIdNotFoundFailure&lt;/TestId&gt;&#xD;
       &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskManagement.controller.TaskManagementControllerTest.TestGetManagementByGuidSuccess&lt;/TestId&gt;&#xD;
       &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskManagement.controller.TaskManagementControllerTest.TestGetManagementByGuidNotFound&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::E2DFF4EF-9B69-4CA0-94EF-C41E85BC0EF3::net8.0::SmartTaskManagementIntegrationTests.UnitTest1.Test1&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::E2DFF4EF-9B69-4CA0-94EF-C41E85BC0EF3::net8.0::SmartTaskManagementIntegrationTests.TaskManagement.SUT.ManagementIntegrationTest.Test1&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::E2DFF4EF-9B69-4CA0-94EF-C41E85BC0EF3::net8.0::SmartTaskManagementIntegrationTests.TaskManagement.SUT.ManagementIntegrationTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithDockerContainer.TestGetAllTaskManagementSuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithDockerContainer&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
     &lt;ProjectFolder&gt;DBA4871E-B163-44E1-BEE1-B696930284BD/d:TaskManagement/d:controller&lt;/ProjectFolder&gt;&#xD;
     &lt;ProjectFolder&gt;DBA4871E-B163-44E1-BEE1-B696930284BD/d:TaskManagement/d:service&lt;/ProjectFolder&gt;&#xD;
+  &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=92d348e4_002Db914_002D40db_002D990c_002D6ade3760874f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetTaskManagementByGuidSuccess" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithDockerContainer&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

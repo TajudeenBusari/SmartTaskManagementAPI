@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "W1Z3+8nYKdzFkg3Q+HiFDJ3NazZfVdMl93uinL4lmM12Yy6fPwK1SH0UMQmEaeWBJsWYV8ua79iT13e5zqiZEQ==",
+  "dgSpecHash": "iqidx/0gOIkPN/FLhadlrpl4qSCkiScaLeyG/Hmp9WHCbEkSwEZaNfTFleosSTZl2D0uIGzeiFJ3i49Ul4QqUA==",
   "success": true,
   "projectFilePath": "C:\\Users\\tajud\\DotnetProjectsAPITest\\SmartTaskManagementAPI\\SmartTaskManagementAPI\\SmartTaskManagementAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tajud\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\tajud\\.nuget\\packages\\fluentvalidation\\11.10.0\\fluentvalidation.11.10.0.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

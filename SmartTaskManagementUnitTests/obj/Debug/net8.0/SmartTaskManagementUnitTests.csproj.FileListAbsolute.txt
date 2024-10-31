@@ -175,3 +175,4 @@ C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementU
 C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests\obj\Debug\net8.0\SmartTaskManagementUnitTests.genruntimeconfig.cache
 C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests\obj\Debug\net8.0\ref\SmartTaskManagementUnitTests.dll
 C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests\bin\Debug\net8.0\JetBrains.Annotations.dll
+C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests\bin\Debug\net8.0\FluentValidation.dll
