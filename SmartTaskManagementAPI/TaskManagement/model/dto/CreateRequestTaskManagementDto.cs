@@ -9,9 +9,13 @@ namespace SmartTaskManagementAPI.TaskManagement.model.dto;
 public class CreateRequestTaskManagementDto
 {
     [Required]
+    [MinLength(5, ErrorMessage = "Title cannot be less than 5 characters")]
     [MaxLength(10, ErrorMessage = "Title cannot be over 10 characters")]
+    
     public string Title { get; set; } 
     
+    [MinLength(5, ErrorMessage = "Description must be 10 characters")]
+    [MaxLength(100, ErrorMessage = "Description cannot be over 100 characters")]
     public string? Description { get; set; } //(e.g., "Complete the quarterly financial report")
 
     [Required(ErrorMessage = "Date is missing")] 

@@ -1,5 +1,7 @@
 
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using SmartTaskManagementAPI.Exceptions.modelNotFound;
 using SmartTaskManagementAPI.TaskManagement.mappers;
 using SmartTaskManagementAPI.TaskManagement.model.dto;
 using SmartTaskManagementAPI.TaskManagement.model.Objects;
@@ -38,16 +40,29 @@ public class TaskManagementController: ControllerBase
     public async Task<ActionResult<Result>> GetTaskManagementByGuid([FromRoute] Guid id)
     {
         var returnedTaskManagement = await _taskManagementService.GetByIdAsync(id);
-        //Convert found TaskManagement to Dto
-        var returnedTaskManagementDto = _managementMapper
-            .MapFromTaskMagtToTaskMagtDto(returnedTaskManagement);
+
+        if (returnedTaskManagement != null)
+        {
+            //Convert found TaskManagement to Dto
+            var returnedTaskManagementDto = _managementMapper
+                .MapFromTaskMagtToTaskMagtDto(returnedTaskManagement);
         
-        return Ok(new Result(true, System.StatusCode.SUCCESS, "Find One Success", returnedTaskManagementDto));
+            return Ok(new Result(true, System.StatusCode.SUCCESS, "Find One Success", returnedTaskManagementDto));
+        }
+        else
+        {
+            return NotFound(new Result(false, System.StatusCode.NOT_FOUND, new TaskManagementNotFoundException(id).Message));
+        }
+        
     }
 
     [HttpPost]
     public async Task<ActionResult<Result>> AddTaskManagement([FromBody] CreateRequestTaskManagementDto createRequestTaskManagementDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new Result(false, System.StatusCode.BAD_REQUEST, "Invalid Data", ModelState));
+        }
         //convert to TaskManager
         var taskManagement = _managementMapper
             .MapFromCreateRequestTaskManagementDtoToTaskManagement(createRequestTaskManagementDto);
@@ -65,6 +80,11 @@ public class TaskManagementController: ControllerBase
         [FromRoute] Guid id, 
         [FromBody] UpdateRequestTaskManagementDto updateRequestTaskManagementDto)
     {
+        if (!ModelState.IsValid)
+        {
+            //for now, it is not returning this but the inbuilt exception
+            return BadRequest(new Result(false, System.StatusCode.BAD_REQUEST, "Provided data is/are invalid."));
+        }
         //convert to domain class
         var update = _managementMapper
             .MapFromUpdateRequestTaskManagementDtoToTaskManagement(updateRequestTaskManagementDto);

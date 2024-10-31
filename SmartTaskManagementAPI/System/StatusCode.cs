@@ -10,4 +10,5 @@ public class StatusCode
     public static readonly int BAD_REQUEST = 400;
     public static readonly int UNAUTHORIZED = 401;
     public static readonly int FORBIDDEN = 404;
+    //public static readonly int BAD_CREDENTIALS = 401;
 }

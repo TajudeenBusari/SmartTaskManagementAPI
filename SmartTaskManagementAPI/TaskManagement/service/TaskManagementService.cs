@@ -1,8 +1,11 @@
+using System;
 using SmartTaskManagementAPI.Data;
 using SmartTaskManagementAPI.Exceptions.modelNotFound;
 using SmartTaskManagementAPI.TaskCategory.repository;
 using SmartTaskManagementAPI.TaskManagement.model.Objects;
 using SmartTaskManagementAPI.TaskManagement.repository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace SmartTaskManagementAPI.TaskManagement.service;
 using model;
@@ -48,6 +51,7 @@ public class TaskManagementService
     //Update a TaskManagement by id
     public async Task<TaskManagement> UpdateByIdAsync(Guid id, TaskManagement taskManagement)
     {
+        
         var foundTaskManagement = await _taskManagementRepository.GetByIdAsync(id);
         if (foundTaskManagement == null)
         {
