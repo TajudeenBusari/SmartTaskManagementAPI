@@ -1,3 +1,5 @@
+using SmartTaskManagementAPI.TaskCategory.mappers;
+using SmartTaskManagementAPI.TaskCategory.model.dto;
 using SmartTaskManagementAPI.TaskManagement.model.dto;
 
 namespace SmartTaskManagementAPI.TaskManagement.mappers;
@@ -5,6 +7,11 @@ using model;
 
 public class TaskManagementMapper
 {
+    private readonly TaskCategoryMapper _taskCategoryMapper;
+    public TaskManagementMapper(TaskCategoryMapper taskCategoryMapper)
+    {
+        _taskCategoryMapper = taskCategoryMapper;
+    }
     //TaskManagementMapper to TaskManagementMapperDto
     public  TaskManagementDto MapFromTaskMagtToTaskMagtDto(TaskManagement taskManagement)
     {
@@ -20,7 +27,8 @@ public class TaskManagementMapper
             DueDate = taskManagement.DueDate,
             Status = taskManagement.Status,
             Priority = taskManagement.Priority,
-            TaskCategoryId = taskManagement.TaskCategoryId
+            TaskCategoryId = taskManagement.TaskCategoryId,
+            TaskOwner = _taskCategoryMapper.MapFromCategoryToCategoryDto(taskManagement.TaskCategory)
         };
     }
     

@@ -11,8 +11,10 @@ using SmartTaskManagementAPI.TaskManagement.repository;
 using SmartTaskManagementAPI.TaskManagement.service;
 
 
+
 namespace SmartTaskManagementAPITest.TaskManagement.service;
 using SmartTaskManagementAPI.TaskManagement.model;
+
 
 public class TaskManagementServiceTest: IDisposable
 {
@@ -24,11 +26,6 @@ public class TaskManagementServiceTest: IDisposable
     // Setup method (runs before each test)
     public TaskManagementServiceTest()
     {
-        /*var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
-            .Options;*/
-        
-        
         // Initialize repository and service with the context
         _mocktaskManagementRepository = new Mock<ITaskManagementRepository>();
         _taskManagementService = new TaskManagementService(_mocktaskManagementRepository.Object);
@@ -59,7 +56,7 @@ public class TaskManagementServiceTest: IDisposable
                 Description = "description1",
                 DueDate = DateTime.Now,
                 Priority = "priority1",
-                TaskCategory = new TaskCategory()
+                TaskCategory = new SmartTaskManagementAPI.TaskCategory.model.TaskCategory()
                 {
                     Name = ""
                 },
@@ -73,7 +70,7 @@ public class TaskManagementServiceTest: IDisposable
                 Description = "description2",
                 DueDate = DateTime.Now,
                 Priority = "priority2",
-                TaskCategory = new TaskCategory()
+                TaskCategory = new SmartTaskManagementAPI.TaskCategory.model.TaskCategory()
                 {
                     Name = ""
                 },
@@ -121,7 +118,7 @@ public class TaskManagementServiceTest: IDisposable
                 Description = "description1",
                 DueDate = DateTime.Now,
                 Priority = "High",
-                TaskCategory = new TaskCategory()
+                TaskCategory = new SmartTaskManagementAPI.TaskCategory.model.TaskCategory()
                 {
                     Name = ""
                 },
@@ -135,7 +132,7 @@ public class TaskManagementServiceTest: IDisposable
                 Description = "description1 and description1",
                 DueDate = DateTime.Now,
                 Priority = "High",
-                TaskCategory = new TaskCategory()
+                TaskCategory = new SmartTaskManagementAPI.TaskCategory.model.TaskCategory()
                 {
                     Name = ""
                 },
@@ -198,7 +195,7 @@ public class TaskManagementServiceTest: IDisposable
         taskManagement.Description = "description1";
         taskManagement.DueDate = DateTime.Now;
         taskManagement.Priority = "priority1";
-        taskManagement.TaskCategory = new TaskCategory()
+        taskManagement.TaskCategory = new SmartTaskManagementAPI.TaskCategory.model.TaskCategory()
         {
             Name = ""
         };
@@ -254,7 +251,7 @@ public class TaskManagementServiceTest: IDisposable
         taskManagement.Description = "description1";
         taskManagement.DueDate = DateTime.Now;
         taskManagement.Priority = "priority1";
-        taskManagement.TaskCategory = new TaskCategory()
+        taskManagement.TaskCategory = new SmartTaskManagementAPI.TaskCategory.model.TaskCategory()
         {
             Name = ""
         };
@@ -321,6 +318,7 @@ public class TaskManagementServiceTest: IDisposable
         
         //Assert
         Assert.NotNull(result);
+        //Assert.Equal(updateTaskManagement.Status, result.Status);
         
         _mocktaskManagementRepository
             .Verify(repo =>

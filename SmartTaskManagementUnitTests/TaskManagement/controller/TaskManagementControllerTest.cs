@@ -5,6 +5,7 @@ using Moq;
 using Newtonsoft.Json;
 using SmartTaskManagementAPI.Exceptions.modelNotFound;
 using SmartTaskManagementAPI.System;
+using SmartTaskManagementAPI.TaskCategory.mappers;
 using SmartTaskManagementAPI.TaskCategory.model;
 using SmartTaskManagementAPI.TaskManagement.controller;
 using SmartTaskManagementAPI.TaskManagement.mappers;
@@ -15,6 +16,7 @@ using SmartTaskManagementAPI.TaskManagement.service;
 
 namespace SmartTaskManagementAPITest.TaskManagement.controller;
 using SmartTaskManagementAPI.TaskManagement.model;
+using SmartTaskManagementAPI.TaskCategory.model;
 
 
 public class TaskManagementControllerTest
@@ -24,6 +26,7 @@ public class TaskManagementControllerTest
     private readonly TaskManagementService _taskManagementService;
     private readonly TaskManagementController _controller;
     private readonly TaskManagementMapper _mapper;
+    private readonly TaskCategoryMapper _categoryMapper;
     
     // Constructor to set up the mocks and controller
     public TaskManagementControllerTest()
@@ -33,7 +36,8 @@ public class TaskManagementControllerTest
         
         // Inject the mock repository into the service
         _taskManagementService = new TaskManagementService(_mockRepository.Object);
-        _mapper = new TaskManagementMapper();
+        _categoryMapper = new TaskCategoryMapper();
+        _mapper = new TaskManagementMapper(_categoryMapper);
         
         // Pass the service into the controller
         _controller = new TaskManagementController(_taskManagementService);
@@ -78,7 +82,7 @@ public class TaskManagementControllerTest
         
         // Mock the REPO to return these tasks
         /***
-         * Not in the controller class test, we are mocking the repo and using
+         * Note in the controller class test, we are mocking the repo and using
          * in the setup instead of the service class bcos the service takes the repo as argument
          */
         _mockRepository.Setup(repo => repo.GetAllAsync())
@@ -151,9 +155,6 @@ public class TaskManagementControllerTest
         Assert.Equal("title1", returnedTasks?.Title);
         Assert.Equal("Open", returnedTasks?.Status);
         Assert.Equal("description1", returnedTasks?.Description);
-
-
-
     }
 
     [Fact]
@@ -282,9 +283,6 @@ public class TaskManagementControllerTest
             .Setup(repo =>
                 repo.GetByIdAsync(oldTaskManagement.TaskId)).ReturnsAsync(oldTaskManagement);
         
-        
-
-        //Mock
         _mockRepository.Setup(repo =>
                 repo.UpdateAsync(oldTaskManagement.TaskId, It.IsAny<TaskManagement>()))
             .ReturnsAsync(updated);

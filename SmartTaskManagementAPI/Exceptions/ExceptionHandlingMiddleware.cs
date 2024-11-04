@@ -35,15 +35,16 @@ public class ExceptionHandlingMiddleware
             await HandleTaskCategoryNotFoundExceptionAsync(httpContext, ex, 404);
         }
 
-        catch (ValidationException  ex) //built in
+        catch (ValidationException ex) //built in
         {
             await HandleInvalidDataException(httpContext, ex, 400);
         }
 
         catch (Exception ex) //built in
         {
-            await HandleGenericExceptionAsync(httpContext,  500);
+            await HandleGenericExceptionAsync(httpContext, 500);
         }
+       
     }
 
     private Task HandleInvalidDataException(HttpContext httpContext, ValidationException ex, int code)

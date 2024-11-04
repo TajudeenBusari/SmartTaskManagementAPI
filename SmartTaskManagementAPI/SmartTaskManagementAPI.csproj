@@ -31,10 +31,6 @@
     </ItemGroup>
     
     <ItemGroup>
-        <InternalsVisibleTo Include = "SmartTaskManagementIntegrationTests"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <InternalsVisibleTo Include = "SmartTaskIntegrationTest"/>
     </ItemGroup>
 

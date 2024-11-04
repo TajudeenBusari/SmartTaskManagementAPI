@@ -1,7 +1,7 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=F645262C_002DB2F7_002D42AC_002D83DA_002DD2BE7E3E375D/@EntryIndexedValue">DBA4871E-B163-44E1-BEE1-B696930284BD</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0fd44629_002Da5a5_002D4659_002Da7e2_002Dc95f4c816999/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllTaskManagementSuccess" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0fd44629_002Da5a5_002D4659_002Da7e2_002Dc95f4c816999/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAllTaskManagementSuccess" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskManagement.service.TaskManagementServiceTest.GetAllTaskManagementSuccess&lt;/TestId&gt;&#xD;
@@ -15,9 +15,33 @@
       &lt;TestId&gt;xUnit::E2DFF4EF-9B69-4CA0-94EF-C41E85BC0EF3::net8.0::SmartTaskManagementIntegrationTests.TaskManagement.SUT.ManagementIntegrationTest&lt;/TestId&gt;&#xD;
       &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithDockerContainer.TestGetAllTaskManagementSuccess&lt;/TestId&gt;&#xD;
       &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithDockerContainer&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest.TestGetAllTaskCategorySuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest.TestGetTaskCategoryByIdSuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest.TestGetTaskCategoryByNonExistingIdFailure&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest.TestAddTaskCategorySuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest.TestUpdateTaskCategorySuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest.TestUpdateTaskCategoryWithNonExistingIdFailure&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest.TestDeleteCategoryByIdSuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest.TestDeleteCategoryByNonExistingIdFailure&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.service.TaskCategoryServiceTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.controller.TaskCategoryControllerTest.GetAllCategorySuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.controller.TaskCategoryControllerTest.TestAddCategorySuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.controller.TaskCategoryControllerTest.TestGetAllCategorySuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.controller.TaskCategoryControllerTest.TestGetCategoryByIdSuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.controller.TaskCategoryControllerTest.TestGetCategoryByNonExistingIdFailure&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.controller.TaskCategoryControllerTest.TestUpdateCategorySuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.controller.TaskCategoryControllerTest.TestUpdateCategoryWithNonExistingIdFailure&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskCategory.controller.TaskCategoryControllerTest.TestDeleteCategorySuccess&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
     &lt;ProjectFolder&gt;DBA4871E-B163-44E1-BEE1-B696930284BD/d:TaskManagement/d:controller&lt;/ProjectFolder&gt;&#xD;
     &lt;ProjectFolder&gt;DBA4871E-B163-44E1-BEE1-B696930284BD/d:TaskManagement/d:service&lt;/ProjectFolder&gt;&#xD;
+    &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
+  &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1aac407b_002D222c_002D45eb_002D9b28_002D18bba189092b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestTaskManagementByNonExistingGuidFailure" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskIntegrationTest" Presentation="&amp;lt;SmartTaskIntegrationTest&amp;gt;" /&gt;&#xD;
+    &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=92d348e4_002Db914_002D40db_002D990c_002D6ade3760874f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetTaskManagementByGuidSuccess" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
@@ -27,4 +51,5 @@
     &lt;/TestAncestor&gt;&#xD;
     &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	</wpf:ResourceDictionary>

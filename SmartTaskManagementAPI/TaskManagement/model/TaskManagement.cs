@@ -28,7 +28,13 @@ public class TaskManagement
     //[ForeignKey("TaskCategoryId")]
     //navigation property
     public TaskCategory? TaskCategory { get; set; } //many tasks can be owned by one TaskCategory
-    public long? TaskCategoryId { get; set; } 
+    public long? TaskCategoryId { get; set; }
+
+    public void SetTaskCategory(TaskCategory category)
+    {
+        TaskCategory = category;
+    }
+
     
 }
 
