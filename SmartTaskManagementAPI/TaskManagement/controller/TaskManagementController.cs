@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using SmartTaskManagementAPI.Exceptions.modelNotFound;
+using SmartTaskManagementAPI.TaskCategory.mappers;
 using SmartTaskManagementAPI.TaskManagement.mappers;
 using SmartTaskManagementAPI.TaskManagement.model.dto;
 using SmartTaskManagementAPI.TaskManagement.model.Objects;
@@ -17,11 +18,13 @@ public class TaskManagementController: ControllerBase
 {
     private readonly TaskManagementService _taskManagementService;
     private readonly TaskManagementMapper _managementMapper;
+    private readonly TaskCategoryMapper _categoryMapper;
 
     public TaskManagementController(TaskManagementService taskManagementService)
     {
+        _categoryMapper = new TaskCategoryMapper();
         _taskManagementService = taskManagementService;
-        _managementMapper = new TaskManagementMapper();
+        _managementMapper = new TaskManagementMapper(_categoryMapper);
     }
 
     [HttpGet]

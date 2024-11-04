@@ -65,10 +65,11 @@ public class ManagementTestWithDockerContainer: IClassFixture<CustomDockerWebApp
     [Fact, TestPriority(2)]
     public async Task GetTaskManagementByGuidSuccess()
     {
+        //Arrange
         //var taskId = new Guid("212bd5f9-d108-4dc4-9ef4-03fbe237ad74"); //use this and use data fixture in custom web factory
         var taskId = new Guid("EE3EF122-AF19-4E5F-88C5-F2241AE989C8"); //this is already available in DB
         
-        //Arrange
+        
         //Act
         var response = await _client.GetAsync(HttpHelper.Urls.GetTaskManagementById(taskId));
         
@@ -211,7 +212,6 @@ public class ManagementTestWithDockerContainer: IClassFixture<CustomDockerWebApp
         Assert.Equal("Delete Success", deserializeObject?.message);
         var responseData = deserializeObject?.data;
         Assert.Null(responseData);
-        
     }
     
 }

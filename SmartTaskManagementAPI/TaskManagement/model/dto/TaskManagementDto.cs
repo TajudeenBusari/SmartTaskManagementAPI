@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SmartTaskManagementAPI.TaskCategory.model.dto;
 
 namespace SmartTaskManagementAPI.TaskManagement.model.dto;
 using TaskCategory.model;
@@ -29,5 +30,6 @@ public class TaskManagementDto
     
     //public TaskCategory? TaskCategory { get; set; } we are not returning this to the client
     
-    public long? TaskCategoryId { get; set; } 
+    public long? TaskCategoryId { get; set; }
+    public TaskCategoryDto TaskOwner;
 }

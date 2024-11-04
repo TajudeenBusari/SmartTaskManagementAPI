@@ -60,15 +60,15 @@ public class ApplicationDbContext: DbContext
             new TaskCategory()
         {
             TaskCategoryId = 100L,
-            Name = "Work",
-            Description = "",
+            Name = "Category1",
+            Description = "Description1",
             
         },
             new TaskCategory()
             {
                 TaskCategoryId = 200L,
-                Name = "Personal",
-                Description = "",
+                Name = "Category2",
+                Description = "Description2",
             
             }
         );
