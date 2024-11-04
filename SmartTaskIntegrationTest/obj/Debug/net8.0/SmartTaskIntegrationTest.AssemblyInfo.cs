@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartTaskIntegrationTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e91aba4f1c242507e09346c4c8049222fc5937b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+659310bc6fb380ab9b808ae971442e1e036660e2")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartTaskIntegrationTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartTaskIntegrationTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
