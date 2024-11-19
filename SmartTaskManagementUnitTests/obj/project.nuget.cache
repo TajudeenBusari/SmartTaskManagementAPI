@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fMNzmqgoTaN/7orNOjBYdefX4Jtu8aXxdSsLkv+1yrLCZxiG5NKR2Z+k9wxAK2v2U8ugQGk2bhtv7ZdSAype4g==",
+  "dgSpecHash": "mWFzathn+B0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\tajud\\DotnetProjectsAPITest\\SmartTaskManagementAPI\\SmartTaskManagementUnitTests\\SmartTaskManagementUnitTests.csproj",
+  "projectFilePath": "C:\\Users\\tajud\\RiderProjects\\SmartTaskManagementAPI\\SmartTaskManagementUnitTests\\SmartTaskManagementUnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tajud\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\tajud\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
