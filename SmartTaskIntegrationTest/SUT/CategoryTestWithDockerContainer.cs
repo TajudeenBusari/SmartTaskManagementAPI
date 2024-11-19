@@ -1,6 +1,5 @@
 using System.Net;
 using System.Net.Http.Json;
-using DotNet.Testcontainers.Builders;
 using FluentAssertions;
 using Newtonsoft.Json;
 using SmartTaskIntegrationTest.Fixtures;
@@ -8,7 +7,6 @@ using SmartTaskIntegrationTest.Helper;
 using SmartTaskManagementAPI.System;
 using SmartTaskManagementAPI.TaskCategory.model;
 using SmartTaskManagementAPI.TaskCategory.model.dto;
-using SmartTaskManagementAPI.TaskManagement.model;
 using SmartTaskManagementAPI.TaskManagement.model.dto;
 using Xunit.Abstractions;
 
@@ -72,15 +70,6 @@ public class CategoryTestWithDockerContainer: IClassFixture<CustomDockerWebAppli
     public async Task TestUpdateTaskManagementSuccess()
     {
         //Arrange
-        /*
-         * {
-              "taskCategoryId": 100,
-              "name": "Category1",
-              "description": "Description1",
-              "numberOfTaskManagements": 0
-            }
-         */
-
         const int taskCategoryId = 100;
         var updateRequest = new UpdateRequestCategoryDto()
         {

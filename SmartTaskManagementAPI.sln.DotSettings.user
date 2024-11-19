@@ -1,7 +1,21 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AAsyncTaskMethodBuilderT_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Ffb367341658aaedd7de424d4c9189db33c4387e268dcc4011918569442ab12_003FAsyncTaskMethodBuilderT_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADbContext_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F3bd4df5aff92cabbc4d630be64227073db1b8539b3a1e47786b4b189d7cdb7_003FDbContext_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AExceptionAggregator_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F38284ca4f4afe378f96fccac3e179f4bceda7a74eb151623b66d2dc3634d9b_003FExceptionAggregator_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AExecutionContext_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F9eda537f15ea23cdfae523c19e87eb303a3ded88937ae7e55919387a43f70_003FExecutionContext_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AExecutionTimer_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F3b92f859131bde25d0f7a63de08963e995d1e1426e584dfd4b8e833d2d3dba_003FExecutionTimer_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AMethodBaseInvoker_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fd882146b4f265f10bcbec2663fce248db9ffec5fa1aeaf76e32a11ba5eafcd6_003FMethodBaseInvoker_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AReflectionAbstractionExtensions_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fbce78fe52d797846b2e554f7e0fb8c831d7f4aeee133452a18131aee2eb9b2_003FReflectionAbstractionExtensions_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ARelationalCommand_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F5ada2b76e4bdf12f7f393b06bc15d22d33ddfe75485f77473a74c15e7041f4_003FRelationalCommand_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ARuntimeType_002ECoreCLR_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F955ec549fe664629353c3b5424b6ad6c7dfcec4ab59bae709ab962c228cf45_003FRuntimeType_002ECoreCLR_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ATaskContinuation_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fb86cdfe19de105ff2eab7d5d4c613fd91b9adfe4f95bd82e2d6db593e6d3ca3_003FTaskContinuation_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ATask_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F2e49d132ea68ff47071c64476ae29138fa965dc555ef7c3f4991586431de241_003FTask_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ATestInvoker_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fc3ec25c53b94f51fa21da479c513e551efee2b5ae49a79934686d2bb714d46_003FTestInvoker_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AWebApplicationFactory_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fd7dbe7c4cc75f01532fb6ce687bce710e21c95e6c44fd11dbe73c87d22758_003FWebApplicationFactory_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AXunitTestClassRunner_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Ffa89f150e61fcb98d99f99d4228756e848229b425ae861ae7c6ab45b33bb35_003FXunitTestClassRunner_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=F645262C_002DB2F7_002D42AC_002D83DA_002DD2BE7E3E375D/@EntryIndexedValue">DBA4871E-B163-44E1-BEE1-B696930284BD</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0fd44629_002Da5a5_002D4659_002Da7e2_002Dc95f4c816999/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAllTaskManagementSuccess" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0fd44629_002Da5a5_002D4659_002Da7e2_002Dc95f4c816999/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllTaskManagementSuccess" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;xUnit::DBA4871E-B163-44E1-BEE1-B696930284BD::net8.0::SmartTaskManagementAPITest.TaskManagement.service.TaskManagementServiceTest.GetAllTaskManagementSuccess&lt;/TestId&gt;&#xD;
@@ -36,20 +50,44 @@
     &lt;ProjectFolder&gt;DBA4871E-B163-44E1-BEE1-B696930284BD/d:TaskManagement/d:controller&lt;/ProjectFolder&gt;&#xD;
     &lt;ProjectFolder&gt;DBA4871E-B163-44E1-BEE1-B696930284BD/d:TaskManagement/d:service&lt;/ProjectFolder&gt;&#xD;
     &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
+    &lt;ProjectFolder&gt;1F079A43-E001-4B99-8D2F-2D9310FE1A27/d:SUT&lt;/ProjectFolder&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1aac407b_002D222c_002D45eb_002D9b28_002D18bba189092b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestTaskManagementByNonExistingGuidFailure" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1aac407b_002D222c_002D45eb_002D9b28_002D18bba189092b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestTaskManagementByNonExistingGuidFailure" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
-    &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskIntegrationTest" Presentation="&amp;lt;SmartTaskIntegrationTest&amp;gt;" /&gt;&#xD;
-    &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.CategoryTestWithDockerContainer.TestGetAllCategories&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithDockerContainer.TestGetAllTaskManagementSuccess&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.CategoryTestWithInMemoryDataBase.TestGetAllCategoriesSuccess&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
+    &lt;ProjectFile&gt;1F079A43-E001-4B99-8D2F-2D9310FE1A27/d:SUT/f:CategoryTestWithDockerContainer.cs&lt;/ProjectFile&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=92d348e4_002Db914_002D40db_002D990c_002D6ade3760874f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetTaskManagementByGuidSuccess" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithDockerContainer&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.CategoryTestWithDockerContainer.TestGetAllCategories&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.CategoryTestWithDockerContainer&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
     &lt;Project Location="C:\Users\tajud\DotnetProjectsAPITest\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
+    &lt;Project Location="C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests" Presentation="&amp;lt;SmartTaskManagementUnitTests&amp;gt;" /&gt;&#xD;
+    &lt;ProjectFolder&gt;1F079A43-E001-4B99-8D2F-2D9310FE1A27/d:SUT&lt;/ProjectFolder&gt;&#xD;
   &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=98b0fe66_002D191c_002D4225_002D8951_002D173ae7904305/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestGetAllCategoriesSuccess" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.CategoryTestWithInMemoryDataBase&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithInMemoryDataBase.TestGetAllTaskManagementSuccess&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithInMemoryDataBase.TestGetTaskManagementByGuidSuccess&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithInMemoryDataBase.TestGetTaskManagementByNonExistingGuidFailure&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithInMemoryDataBase.TestAddTaskManagementSuccess&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithInMemoryDataBase.TestUpdateTaskManagementSuccess&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithInMemoryDataBase.TestUpdateTaskManagementWithInvalidDataFail&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithInMemoryDataBase.TestDeleteTaskManagementSuccess&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.ManagementTestWithInMemoryDataBase&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1F079A43-E001-4B99-8D2F-2D9310FE1A27::net8.0::SmartTaskIntegrationTest.SUT.CategoryTestWithDockerContainer.TestGetAllCategories&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>
