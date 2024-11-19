@@ -18,12 +18,6 @@ public class ApplicationDbContext: DbContext
     {
         base.OnModelCreating(modelBuilder);
         
-        //build foreign key
-        /*modelBuilder.Entity<TaskManagement>(x =>
-            x.HasKey(p => new
-            {
-                p.TaskCategoryId
-            }));*/
         
         //TaskManagement with TaskCategory
         modelBuilder.Entity<TaskManagement>()

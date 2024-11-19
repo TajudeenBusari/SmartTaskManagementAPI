@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -15,10 +16,14 @@ public class CustomDockerWebApplicationFactory : WebApplicationFactory<Program>,
     public CustomDockerWebApplicationFactory()
     {
         //create container for the SQL Server
-         _dbContainer = new MsSqlBuilder().Build();
-
+        
+         //_dbContainer = new MsSqlBuilder().Build();
+         // Use the MsSqlContainerBuilder to configure the SQL Server container
+         _dbContainer = new MsSqlBuilder()
+             .WithImage("mcr.microsoft.com/mssql/server:2022-CU10-ubuntu-22.04")
+             .Build();
     }
-
+    
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         var connectionString = _dbContainer.GetConnectionString();
@@ -35,6 +40,8 @@ public class CustomDockerWebApplicationFactory : WebApplicationFactory<Program>,
 
     }
     
+    
+    //initialize container
     public async Task InitializeAsync()
     {
         await _dbContainer.StartAsync();
@@ -51,8 +58,11 @@ public class CustomDockerWebApplicationFactory : WebApplicationFactory<Program>,
         }
     }
 
+    //stop container
     public async Task DisposeAsync()
     {
         await _dbContainer.StopAsync();
     }
 }
+
+//test container Doc: https://testcontainers.com/modules/mssql/?language=dotnet
