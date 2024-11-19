@@ -1,6 +1,19 @@
 obj/
 .idea/
+*.Rider/
+_ReSharper.Caches/
 bin/
 *.iml
 *.ipr
 *.iws
+
+# Ignore specific file types generated during builds
+*.dll
+*.exe
+*.pdb
+*.cache
+*.sourcelink.json
+
+# Dotnet-specific files
+*.user
+*.vs/
