@@ -45,14 +45,14 @@ namespace SmartTaskManagementAPI.Migrations
                         new
                         {
                             TaskCategoryId = 100L,
-                            Description = "",
-                            Name = "Work"
+                            Description = "Description1",
+                            Name = "Category1"
                         },
                         new
                         {
                             TaskCategoryId = 200L,
-                            Description = "",
-                            Name = "Personal"
+                            Description = "Description2",
+                            Name = "Category2"
                         });
                 });
 
@@ -94,7 +94,7 @@ namespace SmartTaskManagementAPI.Migrations
                         {
                             TaskId = new Guid("ee3ef122-af19-4e5f-88c5-f2241ae989c8"),
                             Description = "Complete the quarterly financial report",
-                            DueDate = new DateTime(2024, 10, 23, 20, 56, 13, 993, DateTimeKind.Local).AddTicks(6036),
+                            DueDate = new DateTime(2024, 11, 16, 16, 12, 41, 714, DateTimeKind.Local).AddTicks(4234),
                             Priority = "Low",
                             Status = "in progress",
                             TaskCategoryId = 100L,
@@ -102,9 +102,9 @@ namespace SmartTaskManagementAPI.Migrations
                         },
                         new
                         {
-                            TaskId = new Guid("4e0e7a49-478e-4d06-a18c-cd23edbf40e2"),
+                            TaskId = new Guid("6e3be093-5899-49e0-ae87-6759aea2dc1e"),
                             Description = "Buy groceries for the week",
-                            DueDate = new DateTime(2024, 10, 24, 20, 56, 13, 993, DateTimeKind.Local).AddTicks(6065),
+                            DueDate = new DateTime(2024, 11, 17, 16, 12, 41, 714, DateTimeKind.Local).AddTicks(4251),
                             Priority = "Medium",
                             Status = "Pending",
                             TaskCategoryId = 200L,

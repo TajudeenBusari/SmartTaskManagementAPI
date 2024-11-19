@@ -14,11 +14,14 @@
         <PackageReference Include="FluentAssertions" Version="6.12.1" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.10" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+        <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-        <PackageReference Include="Testcontainers" Version="3.10.0" />
-        <PackageReference Include="Testcontainers.MsSql" Version="3.10.0" />
+        <PackageReference Include="Moq" Version="4.20.72" />
+        <PackageReference Include="Testcontainers" Version="4.1.0-beta.11746011829" />
+        <PackageReference Include="Testcontainers.MsSql" Version="4.0.0" />
         <PackageReference Include="xunit" Version="2.5.3" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
     </ItemGroup>
