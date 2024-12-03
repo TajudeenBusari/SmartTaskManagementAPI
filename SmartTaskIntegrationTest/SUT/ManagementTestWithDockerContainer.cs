@@ -1,5 +1,7 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,11 +24,30 @@ public class ManagementTestWithDockerContainer: IClassFixture<CustomDockerWebApp
     private readonly ITestOutputHelper _testOutputHelper;
     private readonly CustomDockerWebApplicationFactory _factory;
     private readonly HttpClient _client;
+    private string _token;
     public ManagementTestWithDockerContainer(CustomDockerWebApplicationFactory factory, ITestOutputHelper testOutputHelper)
     {
         _factory = factory;
         _client = _factory.CreateClient();
         _testOutputHelper = testOutputHelper;
+    }
+
+    /// <summary>
+    /// A method to authenticate and get a token
+    /// </summary>
+    private async Task AuthenticateAsync()
+    {
+        var loginRequest = new
+        {
+            username = "Admin",
+            password = "Admin123!"
+        };
+        var content = new StringContent(JsonConvert.SerializeObject(loginRequest), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var deserializedObject = JsonConvert.DeserializeObject<Result>(responseContent);
+        _token = deserializedObject.data.ToString();
     }
     
     [Fact, TestPriority(1)]
@@ -107,6 +128,12 @@ public class ManagementTestWithDockerContainer: IClassFixture<CustomDockerWebApp
     [Fact, TestPriority(4)]
     public async Task TestAddTaskManagementSuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        
         //Arrange
         var createRequest = new CreateRequestTaskManagementDto();
         
@@ -139,6 +166,11 @@ public class ManagementTestWithDockerContainer: IClassFixture<CustomDockerWebApp
     [Fact, TestPriority(5)]
     public async Task TestUpdateTaskManagementSuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         //if condition for data model is not fulfilled, it returned a bad request
         //Arrange
         var taskId = new Guid("EE3EF122-AF19-4E5F-88C5-F2241AE989C8");
@@ -171,6 +203,11 @@ public class ManagementTestWithDockerContainer: IClassFixture<CustomDockerWebApp
     [Fact, TestPriority(6)]
     public async Task TestUpdateTaskManagementWithInvalidData()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         //Arrange
         var taskId = new Guid("EE3EF122-AF19-4E5F-88C5-F2241AE989C8");
         var updateRequest = new UpdateRequestTaskManagementDto();
@@ -198,6 +235,11 @@ public class ManagementTestWithDockerContainer: IClassFixture<CustomDockerWebApp
     [Fact, TestPriority(7)]
     public async Task TestDeleteTaskManagementSuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         //Arrange
         var existingTaskId = new Guid("EE3EF122-AF19-4E5F-88C5-F2241AE989C8");
 

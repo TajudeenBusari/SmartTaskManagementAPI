@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SmartTaskManagementAPI.System;
@@ -33,6 +34,7 @@ public class TaskCategoryController: ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Result>> AddCategory([FromBody] CreateRequestCategoryDto createRequestCategoryDto)
     {
         if (!ModelState.IsValid)
@@ -61,6 +63,7 @@ public class TaskCategoryController: ControllerBase
 
     [HttpPut]
     [Route("{id:long}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Result>> UpdateCategoryById([FromRoute]long id, UpdateRequestCategoryDto updateRequestCategoryDto)
     {
         if (!ModelState.IsValid)
@@ -78,6 +81,7 @@ public class TaskCategoryController: ControllerBase
 
     [HttpDelete]
     [Route("{id:long}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Result>> DeleteCategory([FromRoute] long id)
     {
         await _taskCategoryService.DeleteByIdAsync(id);
@@ -86,6 +90,7 @@ public class TaskCategoryController: ControllerBase
     }
 
     [HttpPut("{categoryId:long}/tasks/{taskId:guid}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Result>> AssignTaskToCategory([FromRoute] long categoryId, [FromRoute] Guid taskId)
     {
         await _taskCategoryService.AssignTaskManagementAsync(categoryId, taskId);

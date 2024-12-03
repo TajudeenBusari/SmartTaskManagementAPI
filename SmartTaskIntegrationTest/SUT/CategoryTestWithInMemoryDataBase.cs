@@ -1,5 +1,7 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,7 @@ public class CategoryTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWebAp
     private readonly ITestOutputHelper _testOutputHelper;
     private readonly CustomInMemoryWebApplicationFactory<Program> _factory;
     private readonly HttpClient _client;
+    private string token;
     public CategoryTestWithInMemoryDataBase(CustomInMemoryWebApplicationFactory<Program> factory, ITestOutputHelper testOutputHelper)
     {
         _testOutputHelper = testOutputHelper;
@@ -36,12 +39,34 @@ public class CategoryTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWebAp
             var db = scopedServices.GetRequiredService<ApplicationDbContext>();
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
-            //db.Database.Migrate(); //no need to use this to avoid creating double table
             SeedingDataForInMemoryDataBase.InitializeTestDb(db);
         }
     }
     
-    
+    /// <summary>
+    /// A method to authenticate and get a token
+    /// </summary>
+    private async Task AuthenticateAsync()
+    {
+        var loginRequest = new
+        {
+            Username = "Admin", Password = "Admin123!"
+        };
+        
+        var content = new StringContent(
+            JsonConvert.SerializeObject(loginRequest), 
+            Encoding.UTF8, 
+            "application/json"
+            );
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var deserializeObject = JsonConvert.DeserializeObject<Result>(responseContent);
+        token = deserializeObject.data.ToString();
+       
+
+    }
     
     [Fact]
     public async Task TestGetAllCategoriesSuccess()
@@ -59,10 +84,32 @@ public class CategoryTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWebAp
         taskManagementList.Should().BeOfType<List<TaskCategoryDto>>();
         
     }
-
+    
+    //press forward slash 3x to generate this
+    /// <summary>
+    /// Tests the successful addition of a category via the API.
+    /// </summary>
+    /// <remarks>
+    /// This test verifies that a category can be added successfully and checks.
+    /// -HTTP status code
+    /// -Response message and flags
+    /// -proper deserialization of the category data
+    /// </remarks>
+    /// <returns>
+    /// A task representing the asynchronous operation of the test.
+    /// </returns>
     [Fact]
     public async Task AddCategorySuccess()
     {
+        //Authentication logic
+        if (string.IsNullOrEmpty(token))
+        {
+            await AuthenticateAsync();
+        }
+        
+        // Set the Authorization header for the client
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
         //Arrange
         var createRequest = new CreateRequestCategoryDto()
         {
@@ -87,9 +134,19 @@ public class CategoryTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWebAp
         Assert.Equal("TestCategoryDescription", taskCategoryDto.Description);
     }
 
+    
+    /// <summary>
+    /// Tests the successful update of a category via the API.
+    /// </summary>
     [Fact]
     public async Task UpdateCategorySuccess()
     {
+        if (string.IsNullOrEmpty(token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
         //Arrange
         const int taskCategoryId = 100;
         var updateRequest = new UpdateRequestCategoryDto()
@@ -133,9 +190,18 @@ public class CategoryTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWebAp
         _testOutputHelper.WriteLine(deserializeObject?.data.ToString());
     }
 
+    /// <summary>
+    /// Tests the successful Assignment of a category via the API.
+    /// </summary>
     [Fact]
     public async Task TestAssignCategorySuccess()
     {
+        if (string.IsNullOrEmpty(token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
         //Arrange
         var taskToBeAssigned = new CreateRequestTaskManagementDto()
         {
@@ -186,9 +252,18 @@ public class CategoryTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWebAp
         Assert.Equal("100", resData.ToString());
     }
 
+    /// <summary>
+    /// Tests the successful Delete of a category via the API.
+    /// </summary>
     [Fact]
     public async Task TestDeleteCategorySuccess()
     {
+        if (string.IsNullOrEmpty(token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
         //Arrange
         var existingCategoryId = 100L;
         

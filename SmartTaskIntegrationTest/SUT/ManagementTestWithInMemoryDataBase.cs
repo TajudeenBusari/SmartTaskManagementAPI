@@ -1,5 +1,7 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,7 @@ public class ManagementTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWeb
     private readonly ITestOutputHelper _testOutputHelper;
     private readonly CustomInMemoryWebApplicationFactory<Program> _factory;
     private readonly HttpClient _client;
+    private string _token;
 
     public ManagementTestWithInMemoryDataBase(CustomInMemoryWebApplicationFactory<Program> factory, ITestOutputHelper testOutputHelper)
     {
@@ -38,6 +41,25 @@ public class ManagementTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWeb
             db.Database.EnsureCreated();
             SeedingDataForInMemoryDataBase.InitializeTestDb(db);
         }
+    }
+
+    /// <summary>
+    /// A method to authenticate and get a token
+    /// </summary>
+    private async Task AuthenticateAsync()
+    {
+        var loginRequest = new
+        {
+            Username = "Admin",
+            Password = "Admin123!"
+        };
+        var content = new StringContent(JsonConvert.SerializeObject(loginRequest), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var deserializedObject = JsonConvert.DeserializeObject<Result>(responseContent);
+        _token = deserializedObject.data.ToString();
     }
 
     [Fact]
@@ -103,8 +125,14 @@ public class ManagementTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWeb
     [Fact]
     public async Task TestAddTaskManagementSuccess()
     {
-        //if condition for data model is not fulfilled, it returned a bad request
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        // Set the Authorization header for the client
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         
+        //if condition for data model is not fulfilled, it returned a bad request
         //Arrange
         var createRequest = new CreateRequestTaskManagementDto()
         {
@@ -138,6 +166,12 @@ public class ManagementTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWeb
     [Fact]
     public async Task TestUpdateTaskManagementSuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        // Set the Authorization header for the client
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         //if condition for data model is not fulfilled, it returned a bad request
         //Arrange
         var existingTaskIdTobeUpdated = new Guid("c938a235-8a75-40d8-861f-b8e0f5498d6c");
@@ -186,6 +220,12 @@ public class ManagementTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWeb
     [Fact]
     public async Task TestUpdateTaskManagementWithInvalidDataFail()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        // Set the Authorization header for the client
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         //Arrange
         var existingTaskIdTobeUpdated = new Guid("c938a235-8a75-40d8-861f-b8e0f5498d6c");
         
@@ -209,6 +249,13 @@ public class ManagementTestWithInMemoryDataBase: IClassFixture<CustomInMemoryWeb
     [Fact]
     public async Task TestDeleteTaskManagementSuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        // Set the Authorization header for the client
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        
         //Arrange
         var existingTaskIdTobeDeleted = new Guid("c938a235-8a75-40d8-861f-b8e0f5498d6c");
         

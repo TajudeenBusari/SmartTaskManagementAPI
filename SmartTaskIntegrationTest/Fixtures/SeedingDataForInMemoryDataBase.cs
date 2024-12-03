@@ -1,3 +1,5 @@
+using SmartTaskManagementAPI.AppUser.models;
+using SmartTaskManagementAPI.AppUser.models.dto;
 using SmartTaskManagementAPI.Data;
 using SmartTaskManagementAPI.TaskCategory.model;
 using SmartTaskManagementAPI.TaskManagement.model;
@@ -57,9 +59,25 @@ public class SeedingDataForInMemoryDataBase
             TaskCategoryId = 500,
             Name = "Name4",
             Description = "Description2",
-        }
-
+            } 
         };
 
     }
+
+    /*
+     /// <summary>
+    /// since I have some users already in the ApplicationDbContext,
+    /// I will not seed any user and their roles in the custom class
+    /// </summary>
+    /// <returns></returns>
+    private static List<ApplicationUser> GetUser()
+    {
+        return new List<ApplicationUser>()
+        {
+            new ApplicationUser()
+            {
+
+            }
+        };
+    }*/
 }

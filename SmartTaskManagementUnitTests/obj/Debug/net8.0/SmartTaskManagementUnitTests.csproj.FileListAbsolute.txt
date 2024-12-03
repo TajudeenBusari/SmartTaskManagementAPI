@@ -354,3 +354,7 @@ C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests\obj\Debug\net8.0\SmartTaskManagementUnitTests.pdb
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests\obj\Debug\net8.0\SmartTaskManagementUnitTests.genruntimeconfig.cache
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests\obj\Debug\net8.0\ref\SmartTaskManagementUnitTests.dll
+C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests\bin\Debug\net8.0\MockQueryable.Core.dll
+C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests\bin\Debug\net8.0\MockQueryable.EntityFrameworkCore.dll
+C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementUnitTests\bin\Debug\net8.0\MockQueryable.Moq.dll

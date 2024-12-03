@@ -1,5 +1,6 @@
 
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTaskManagementAPI.Exceptions.modelNotFound;
 using SmartTaskManagementAPI.TaskCategory.mappers;
@@ -59,7 +60,15 @@ public class TaskManagementController: ControllerBase
         
     }
 
+    /// <summary>
+    /// For now to create a task, you must assign such task to an existing category id,
+    /// else, it returns an error. In the future, I will refactor code in such a way that,
+    /// a task can have null category or can belong to no category
+    /// </summary>
+    /// <param name="createRequestTaskManagementDto"></param>
+    /// <returns></returns>
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Result>> AddTaskManagement([FromBody] CreateRequestTaskManagementDto createRequestTaskManagementDto)
     {
         if (!ModelState.IsValid)
@@ -79,6 +88,7 @@ public class TaskManagementController: ControllerBase
 
     [HttpPut]
     [Route("{id:Guid}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Result>> UpdateTaskManagement(
         [FromRoute] Guid id, 
         [FromBody] UpdateRequestTaskManagementDto updateRequestTaskManagementDto)
@@ -101,6 +111,7 @@ public class TaskManagementController: ControllerBase
 
     [HttpDelete]
     [Route("{id:Guid}")]
+    [Authorize(Roles = "Admin")]
     
     public async Task<ActionResult<Result>> DeleteTaskManagement([FromRoute] Guid id)
     {
