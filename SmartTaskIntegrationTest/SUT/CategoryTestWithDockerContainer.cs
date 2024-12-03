@@ -1,5 +1,7 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using FluentAssertions;
 using Newtonsoft.Json;
 using SmartTaskIntegrationTest.Fixtures;
@@ -17,12 +19,32 @@ public class CategoryTestWithDockerContainer: IClassFixture<CustomDockerWebAppli
     private readonly ITestOutputHelper _testOutputHelper;
     private readonly CustomDockerWebApplicationFactory _factory;
     private readonly HttpClient _client;
+    private string _token;
 
     public CategoryTestWithDockerContainer(CustomDockerWebApplicationFactory factory, ITestOutputHelper testOutputHelper)
     {
         _factory = factory;
         _client = _factory.CreateClient();
         _testOutputHelper = testOutputHelper;
+    }
+
+    /// <summary>
+    /// A method to authenticate and get a token
+    /// </summary>
+    private async Task AuthenticateAsync()
+    {
+        var loginRequest = new
+        {
+            username = "Admin",
+            password = "Admin123!"
+        };
+        
+        var content = new StringContent(JsonConvert.SerializeObject(loginRequest), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var deserializedObject = JsonConvert.DeserializeObject<Result>(responseContent);
+        _token = deserializedObject.data.ToString();
     }
 
     [Fact, TestPriority(1)]
@@ -67,8 +89,13 @@ public class CategoryTestWithDockerContainer: IClassFixture<CustomDockerWebAppli
     }
 
     [Fact, TestPriority(3)]
-    public async Task TestUpdateTaskManagementSuccess()
+    public async Task TestUpdateTaskCategorySuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         //Arrange
         const int taskCategoryId = 100;
         var updateRequest = new UpdateRequestCategoryDto()
@@ -98,6 +125,12 @@ public class CategoryTestWithDockerContainer: IClassFixture<CustomDockerWebAppli
     [Fact, TestPriority(4)]
     public async Task TestAddCategorySuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        
         //Arrange
         var createRequest = new CreateRequestCategoryDto()
         {
@@ -126,6 +159,11 @@ public class CategoryTestWithDockerContainer: IClassFixture<CustomDockerWebAppli
     [Fact, TestPriority(5)]
     public async Task TestAssignCategorySuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         //Arrange
         var taskToBeAssigned = new CreateRequestTaskManagementDto()
         {
@@ -182,6 +220,12 @@ public class CategoryTestWithDockerContainer: IClassFixture<CustomDockerWebAppli
     [Fact, TestPriority(6)]
     public async Task TestDeleteCategorySuccess()
     {
+        if (string.IsNullOrEmpty(_token))
+        {
+            await AuthenticateAsync();
+        }
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        
         //Arrange
         var existingCategoryId = 100L;
         

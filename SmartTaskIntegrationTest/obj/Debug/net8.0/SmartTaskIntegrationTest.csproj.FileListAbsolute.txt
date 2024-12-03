@@ -1007,3 +1007,4 @@ C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskIntegrationTest\bin
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskIntegrationTest\bin\Debug\net8.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskIntegrationTest\bin\Debug\net8.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskIntegrationTest\bin\Debug\net8.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskIntegrationTest\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

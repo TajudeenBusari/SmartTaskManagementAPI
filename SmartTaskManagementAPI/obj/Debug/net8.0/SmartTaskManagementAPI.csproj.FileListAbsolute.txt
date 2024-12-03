@@ -300,3 +300,4 @@ C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementAPI\obj\D
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementAPI\obj\Debug\net8.0\SmartTaskManagementAPI.pdb
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementAPI\obj\Debug\net8.0\SmartTaskManagementAPI.genruntimeconfig.cache
 C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementAPI\obj\Debug\net8.0\ref\SmartTaskManagementAPI.dll
+C:\Users\tajud\RiderProjects\SmartTaskManagementAPI\SmartTaskManagementAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
