@@ -142,12 +142,33 @@ public class UserController: ControllerBase
         }
         return Forbid();
     }
+
+    [HttpPatch]
+    [Route("{userId}/change-password")]
+    [Authorize]
+    public async Task<ActionResult<Result>> ChangePassword([FromRoute] string userId, [FromBody] Dictionary<string, string> passwordMap)
+    {
+        var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var currentUserRole = User.FindFirstValue(ClaimTypes.Role);
+        if (currentUserRole == "Admin" || currentUserId == userId)
+        {
+            var currentPassword = passwordMap["currentPassword"];
+            var newPassword = passwordMap["newPassword"];
+            var confirmPassword = passwordMap["confirmPassword"];
+            await _userService.ChangePasswordAsync(userId, currentPassword, newPassword, confirmPassword);
+            return Ok(new Result(true, System.StatusCode.SUCCESS, "Password Change Success"));
+           
+        }
+        return Forbid();
+      
+    }
+    
     
 }
 
 /***
  * {
   "username": "admin",
-  "password": "Admin123!"
+  "password": "Admin123!" //updated to Admin12345!
   }
  */

@@ -39,12 +39,37 @@ public class ExceptionHandlingMiddleware
         {
             await HandleInvalidDataException(httpContext, ex, 400);
         }
+        
+        catch (PasswordChangeIllegalArgument ex) //custom
+        {
+            await HandlePasswordChangeIllegalArgumentAsync(httpContext, ex, 400);
+        }
 
+        //always put the generic exception at the end
         catch (Exception ex) //built in
         {
             await HandleGenericExceptionAsync(httpContext, 500);
         }
-       
+        
+    }
+    
+    public Task HandlePasswordChangeIllegalArgumentAsync(HttpContext httpContext, PasswordChangeIllegalArgument ex, int code)
+    {
+        Result result = new Result()
+        {
+            flag = false,
+            code = StatusCode.BAD_REQUEST,
+            message = ex.Message,
+            
+            /* I can define a custom message e.g
+             * message = "Password change failed" AND
+             * data = ex.Message //THIS WILL BE ERROR MESSAGE AS DEFINED IN THE EXCEPTION
+             * 
+             */
+        };
+        httpContext.Response.ContentType = "application/json";
+        httpContext.Response.StatusCode = code;
+        return httpContext.Response.WriteAsJsonAsync(result);
     }
 
     private Task HandleInvalidDataException(HttpContext httpContext, ValidationException ex, int code)

@@ -10,6 +10,7 @@ using Moq;
 using SmartTaskManagementAPI.AppUser.models;
 using SmartTaskManagementAPI.AppUser.models.dto;
 using SmartTaskManagementAPI.AppUser.service;
+using SmartTaskManagementAPI.Exceptions;
 using SmartTaskManagementAPI.Exceptions.modelNotFound;
 
 namespace SmartTaskManagementAPITest.AppUser.service;
@@ -427,5 +428,180 @@ public class UserServiceTest
         _mockUserManager.Verify(u => u.FindByIdAsync(existingUserId), Times.Once);
         _mockUserManager.Verify(u => u.DeleteAsync(It.IsAny<ApplicationUser>()), Times.Once);
     }
-    
+
+    [Fact]
+    public async Task TestChangePasswordSuccess()
+    {
+        //Arrange
+        var existingUserId = Guid.NewGuid().ToString();
+        var userHasher1 = new PasswordHasher<ApplicationUser>();
+        var existingUser = new ApplicationUser()
+        {
+            Id = existingUserId,
+            UserName = "oldUser",
+            FirstName = "OldFirstName",
+            LastName = "OldLastName",
+            Email = "someemail1@email.com",
+            PasswordHash = userHasher1.HashPassword(new ApplicationUser(), "Admin123!" )
+        };
+        
+        //Mock
+        _mockUserManager
+            .Setup(m => 
+                m.FindByIdAsync(existingUserId))
+            .ReturnsAsync(existingUser);
+        _mockUserManager
+            .Setup(m => 
+                m.UpdateAsync(It.IsAny<ApplicationUser>()))
+            .ReturnsAsync(IdentityResult.Success);
+        
+        //Act
+        await userService.ChangePasswordAsync(existingUserId, "Admin123!", "NewPassword123!", "NewPassword123!");
+        
+        //Assert
+        var passwordVerificationResult = userHasher1.VerifyHashedPassword(existingUser, existingUser.PasswordHash, "NewPassword123!");
+        
+        Assert.Equal(PasswordVerificationResult.Success, passwordVerificationResult);
+        _mockUserManager.Verify(u => u.FindByIdAsync(existingUserId), Times.Once);
+        _mockUserManager.Verify(u => u.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task TestChangePasswordOldPasswordIsInCorrect()
+    {
+        //Arrange
+        var existingUserId = Guid.NewGuid().ToString();
+        var userHasher1 = new PasswordHasher<ApplicationUser>();
+        var existingUser = new ApplicationUser()
+        {
+            Id = existingUserId,
+            UserName = "oldUser",
+            FirstName = "OldFirstName",
+            LastName = "OldLastName",
+            Email = "someemail1@email.com",
+            PasswordHash = userHasher1.HashPassword(new ApplicationUser(), "CorrectOldPassword123!" )
+        };
+        
+        //Mock
+        _mockUserManager
+            .Setup(m => 
+                m.FindByIdAsync(existingUserId))
+            .ReturnsAsync(existingUser);
+        
+        var incorrectOldPassword = "IncorrectOldPassword123!";
+        var newPassword = "NewPassword123!";
+        var confirmPassword = "NewPassword123!";
+        
+        //Act and Assert
+        var exception = await Assert.ThrowsAsync<PasswordChangeIllegalArgument>(() => 
+            userService.ChangePasswordAsync(existingUserId, incorrectOldPassword, newPassword, confirmPassword));
+       Assert.Equal("Old password is incorrect.", exception.Message); 
+       _mockUserManager.Verify(m => m.FindByIdAsync(existingUserId), Times.Once);
+         _mockUserManager.Verify(m => m.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task TestChangePasswordNewPasswordIsSameAsOldPassword()
+    {
+        //Arrange
+        var existingUserId = Guid.NewGuid().ToString();
+        var userHasher1 = new PasswordHasher<ApplicationUser>();
+        var existingUser = new ApplicationUser()
+        {
+            Id = existingUserId,
+            UserName = "oldUser",
+            FirstName = "OldFirstName",
+            LastName = "OldLastName",
+            Email = "someemail2@email.com",
+            PasswordHash = userHasher1.HashPassword(new ApplicationUser(), "CorrectOldPassword123!")
+        };
+        
+        //Mock
+        _mockUserManager
+            .Setup(m => 
+                m.FindByIdAsync(existingUserId))
+            .ReturnsAsync(existingUser);
+        
+        var correctOldPassword = "CorrectOldPassword123!";
+        var newPassword = "CorrectOldPassword123!";
+        var confirmPassword = "CorrectOldPassword123!";
+        
+       
+        
+        //Act and Assert
+        var exception = await Assert.ThrowsAsync<PasswordChangeIllegalArgument>(() => 
+            userService.ChangePasswordAsync(existingUserId, correctOldPassword, newPassword, confirmPassword));
+        Assert.Equal("New password cannot be the same as the old password.", exception.Message);
+        
+    }
+
+    [Fact]
+    public async Task TestChangePasswordNewPasswordIsNotSameAsConfirmPassword()
+    {
+        //Arrange
+        var existingUserId = Guid.NewGuid().ToString();
+        var userHasher1 = new PasswordHasher<ApplicationUser>();
+        var existingUser = new ApplicationUser()
+        {
+            Id = existingUserId,
+            UserName = "oldUser",
+            FirstName = "OldFirstName",
+            LastName = "OldLastName",
+            Email = "someemail4@email.com",
+            PasswordHash = userHasher1.HashPassword(new ApplicationUser(), "CorrectOldPassword123!")
+            
+        };
+        
+        //MOCK
+        _mockUserManager
+            .Setup(m => 
+                m.FindByIdAsync(existingUserId))
+            .ReturnsAsync(existingUser);
+        
+        var correctOldPassword = "CorrectOldPassword123!";
+        var newPassword = "NewPassword123!";
+        var confirmPassword = "NewPassword12!"; //different from newPassword
+        
+        //Act and Assert
+        var exception = await Assert.ThrowsAsync<PasswordChangeIllegalArgument>(() => 
+            userService.ChangePasswordAsync(existingUserId, correctOldPassword, newPassword, confirmPassword));
+        Assert.Equal("New password and confirm new password do not match.", exception.Message);
+        _mockUserManager.Verify(m => m.FindByIdAsync(existingUserId), Times.Once);
+        _mockUserManager.Verify(m => m.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
+        
+    }
+
+    [Fact]
+    public async Task TestChangePasswordNewPasswordDoesNotConformToPolicy()
+    {
+        //Arrange
+        var existingUserId = Guid.NewGuid().ToString();
+        var userHasher1 = new PasswordHasher<ApplicationUser>();
+        var existingUser = new ApplicationUser()
+        {
+            Id = existingUserId,
+            UserName = "oldUser",
+            FirstName = "OldFirstName",
+            LastName = "OldLastName",
+            Email =  "someemail5@email.com",
+            PasswordHash = userHasher1.HashPassword(new ApplicationUser(), "CorrectOldPassword123!")
+        };
+        
+        //Mock
+        _mockUserManager
+            .Setup(m => 
+                m.FindByIdAsync(existingUserId))
+            .ReturnsAsync(existingUser);
+        var correctOldPassword = "CorrectOldPassword123!";
+        var newPassword = "newpassword"; //does not conform to policy
+        var confirmPassword = "newpassword"; //does not conform to policy
+        
+        //Act and Assert
+        var exception = await Assert.ThrowsAsync<PasswordChangeIllegalArgument>(() => 
+            userService.ChangePasswordAsync(existingUserId, correctOldPassword, newPassword, confirmPassword));
+        Assert.Equal("New password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be between 8 and 15 characters long.", exception.Message);
+        _mockUserManager.Verify(m => m.FindByIdAsync(existingUserId), Times.Once);
+        _mockUserManager.Verify(m => m.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
+    }
+
 }

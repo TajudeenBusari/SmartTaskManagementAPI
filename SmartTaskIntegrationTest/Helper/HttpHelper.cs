@@ -28,5 +28,8 @@ public static class HttpHelper
         public static string AddUser = "api/v1/user";
         public static string UpdateUser(string id) => $"api/v1/user/{id}";
         public static string DeleteUser(string id) => $"api/v1/user/{id}";
+
+        public static string? ChangePassword(string? userId) => $"api/v1/user/{userId}/change-password";
+       
     }
 }

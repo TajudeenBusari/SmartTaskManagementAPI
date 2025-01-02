@@ -507,9 +507,67 @@ public class AppUserControllerTest
         Assert.Equal(200, resultValue.code);
         Assert.Equal("Delete Success", resultValue.message);
         _userServiceMock.Verify(s => s.DeleteUserAsync(normalUserId), Times.Once);
-        
         //I am skipping all other delete methods like normal user deleting another user details
         
     }
+    
+    [Fact]
+    public async Task TestChangePasswordByAdminUserRole_Success()
+    {
+        //Arrange
+        SetUserContext("AdminUser", "Admin");
+        var normalUserId = _users[1].Id;
+        var passwordMap = new Dictionary<string, string>()
+        {
+            {"currentPassword", "User123!"},
+            {"newPassword", "User1234!"},
+            {"confirmPassword", "User1234!"}
+        };
+        
+        //Mock
+        _userServiceMock
+            .Setup(s => 
+                s.ChangePasswordAsync(normalUserId, passwordMap["currentPassword"], passwordMap["newPassword"], passwordMap["confirmPassword"]))
+            .Verifiable();
+        //Act
+        var result = await _userController.ChangePassword(normalUserId, passwordMap);
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var resultValue = Assert.IsType<Result>(okResult.Value);
+        Assert.NotNull(resultValue);
+        Assert.True(resultValue.flag);
+        Assert.Equal(200, resultValue.code);
+        Assert.Equal("Password Change Success", resultValue.message);
+        _userServiceMock.Verify(s => s.ChangePasswordAsync(normalUserId, passwordMap["currentPassword"], passwordMap["newPassword"], passwordMap["confirmPassword"]), Times.Once);
+    }
+
+    [Fact]
+    public async Task TestChangePasswordByUserRoleChangingOwnPassword_Success()
+    {
+        //Arrange
+        var normalUserId = _users[1].Id;
+        SetUserContextWithIdAndRole(normalUserId, "User");
+        var passwordMap = new Dictionary<string, string>()
+        {
+            {"currentPassword", "User123!"},
+            {"newPassword", "User1234!"},
+            {"confirmPassword", "User1234!"}
+        };
+        
+        //Mock
+        _userServiceMock
+            .Setup(s => 
+                s.ChangePasswordAsync(normalUserId, passwordMap["currentPassword"], passwordMap["newPassword"], passwordMap["confirmPassword"]))
+            .Verifiable();
+        //Act
+        var result = await _userController.ChangePassword(normalUserId, passwordMap);
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var resultValue = Assert.IsType<Result>(okResult.Value);
+        Assert.NotNull(resultValue);
+        Assert.True(resultValue.flag);
+        Assert.Equal(200, resultValue.code);
+        Assert.Equal("Password Change Success", resultValue.message);
+        _userServiceMock.Verify(s => s.ChangePasswordAsync(normalUserId, passwordMap["currentPassword"], passwordMap["newPassword"], passwordMap["confirmPassword"]), Times.Once);
+    }
+    
     
 }

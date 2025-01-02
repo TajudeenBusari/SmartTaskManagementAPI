@@ -25,11 +25,6 @@ public class TaskManagementDto
     [Required(ErrorMessage = "Priority is missing")]
     public string Priority { get; set; } = string.Empty;//(e.g., "High", "Medium", "Low")
     
-    //[ForeignKey("TaskCategoryId")]
-    //navigation property
-    
-    //public TaskCategory? TaskCategory { get; set; } we are not returning this to the client
-    
     public long? TaskCategoryId { get; set; }
     public TaskCategoryDto TaskOwner;
 }

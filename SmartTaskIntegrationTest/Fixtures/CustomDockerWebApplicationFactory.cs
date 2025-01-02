@@ -17,8 +17,6 @@ public class CustomDockerWebApplicationFactory : WebApplicationFactory<Program>,
     {
         //create container for the SQL Server
         
-         //_dbContainer = new MsSqlBuilder().Build();
-         // Use the MsSqlContainerBuilder to configure the SQL Server container
          _dbContainer = new MsSqlBuilder()
              .WithImage("mcr.microsoft.com/mssql/server:2022-CU10-ubuntu-22.04")
              .Build();

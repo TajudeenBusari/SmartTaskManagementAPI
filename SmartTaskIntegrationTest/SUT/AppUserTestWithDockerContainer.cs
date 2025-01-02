@@ -320,5 +320,361 @@ public class AppUserTestWithDockerContainer: IClassFixture<CustomDockerWebApplic
         Assert.Null(deserializeDataObject);
     }
 
+    [Fact]
+    public async Task TestPasswordChangeSuccess()
+    {
+        //Arrange
+        if (string.IsNullOrEmpty(_tokenAdmin))
+        {
+            await AuthenticateAsyncAsAdmin();
+        }
+
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenAdmin);
+
+        //create user whose password will be changed
+        var createRequest = new RegistrationRequestDto()
+        {
+            Username = "Tenny",
+            Password = "Tenny123!", //Password must start with capital letter
+            FirstName = "TennyG",
+            LastName = "TennyJ",
+            Email = "Tenny@Tenny.com",
+            Roles = new List<string>{"User"}
+        };
+        
+        var createResponse = await _client.PostAsJsonAsync(HttpHelper.Urls.AddUser, createRequest);
+        
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var createResponseContent = await createResponse.Content.ReadAsStringAsync();
+        var deserializedObjectResult = JsonConvert.DeserializeObject<Result>(createResponseContent);
+        Assert.True(deserializedObjectResult?.flag);
+        Assert.Equal(200, deserializedObjectResult?.code);
+        Assert.Equal("A new user has been created", deserializedObjectResult?.message);
+        var responseData = deserializedObjectResult?.data;
+        _testOutputHelper.WriteLine(responseData?.ToString());
+        var userDetails = JsonConvert.DeserializeObject<UserDto>(responseData.ToString());
+        var userId = userDetails?.Id;
+        
+        //Login as the user to change password
+        var tennyLoginRequest = new
+        {
+            userName = "Tenny", password = "Tenny123!"
+        };
+        
+        var content = new StringContent(JsonConvert.SerializeObject(tennyLoginRequest), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        //extract token from data
+        var responseString = await response.Content.ReadAsStringAsync();
+        var deserializeObject = JsonConvert.DeserializeObject<Result>(responseString);
+        var tennyToken = deserializeObject.data.ToString();
+
+        
+        //Act
+        //change password
+        var changePasswordRequest = new Dictionary<string, string>()
+        {
+            {"currentPassword", "Tenny123!"},
+            {"newPassword", "Tenny1234!"},
+            {"confirmPassword", "Tenny1234!"}
+        };
+        
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tennyToken);
+        var changePasswordResponse = await _client.PatchAsJsonAsync(HttpHelper.Urls.ChangePassword(userId), changePasswordRequest);
+        
+        //Assert
+        changePasswordResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var jsonString = await changePasswordResponse.Content.ReadAsStringAsync();
+        var deObject = JsonConvert.DeserializeObject<Result>(jsonString);
+        Assert.True(deObject?.flag);
+        Assert.Equal(200, deObject?.code);
+        Assert.Equal("Password Change Success", deObject?.message);
+    }
+
+    [Fact]
+    public async Task TestPasswordChangeWithWrongOldPassword()
+    {
+        //Arrange
+        if (string.IsNullOrEmpty(_tokenAdmin))
+        {
+            await AuthenticateAsyncAsAdmin();
+        }
+
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenAdmin);
+
+        //create user whose password will be changed
+        var createRequest = new RegistrationRequestDto()
+        {
+            Username = "Sedo",
+            Password = "Sedo123!", 
+            FirstName = "Sedi",
+            LastName = "Rebecca",
+            Email = "Sedi@Rebecca.com",
+            Roles = new List<string> { "User" }
+        };
+        
+        var createResponse = await _client.PostAsJsonAsync(HttpHelper.Urls.AddUser, createRequest);
+        
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var createResponseContent = await createResponse.Content.ReadAsStringAsync();
+        var deserializedObjectResult = JsonConvert.DeserializeObject<Result>(createResponseContent);
+        Assert.True(deserializedObjectResult?.flag);
+        Assert.Equal(200, deserializedObjectResult?.code);
+        Assert.Equal("A new user has been created", deserializedObjectResult?.message);
+        var responseData = deserializedObjectResult?.data;
+        _testOutputHelper.WriteLine(responseData?.ToString());
+        var userDetails = JsonConvert.DeserializeObject<UserDto>(responseData.ToString());
+        var userId = userDetails?.Id;
+        
+        //Login as the user to change password
+        var sedoLoginRequest = new
+        {
+            userName = "Sedo", password = "Sedo123!"
+
+        };
+        var content = new StringContent(JsonConvert.SerializeObject(sedoLoginRequest), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        //extract token from data
+        var responseString = await response.Content.ReadAsStringAsync();
+        var deserializeObject = JsonConvert.DeserializeObject<Result>(responseString);
+        var sedoToken = deserializeObject.data.ToString();
+        
+        //Act
+        //change password
+        var changePasswordRequest = new Dictionary<string, string>()
+        {
+            {"currentPassword", "Sedo1234!"}, //wrong old password
+            {"newPassword", "Sedo12345!"},
+            {"confirmPassword", "Sedo12345!"}
+        };
+        
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sedoToken);
+        var changePasswordResponse = await _client.PatchAsJsonAsync(HttpHelper.Urls.ChangePassword(userId), changePasswordRequest);
+        
+        //Assert
+        changePasswordResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var jsonString = await changePasswordResponse.Content.ReadAsStringAsync();
+        var deObject = JsonConvert.DeserializeObject<Result>(jsonString);
+        Assert.False(deObject?.flag);
+        Assert.Equal(400, deObject?.code);
+        Assert.Equal("Old password is incorrect.", deObject?.message);
+        var respData = deObject?.data;
+        Assert.Null(respData);
+    }
+
+    [Fact]
+    public async Task TestPasswordChangeWithNewPasswordAndConfirmPasswordNotMatching()
+    {
+        
+        //Arrange
+        if (string.IsNullOrEmpty(_tokenAdmin))
+        {
+            await AuthenticateAsyncAsAdmin();
+        }
+
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenAdmin);
+
+        //create user whose password will be changed
+        var createRequest = new RegistrationRequestDto()
+        {
+            Username = "nathaniel",
+            Password = "Nath123!", 
+            FirstName = "Nath",
+            LastName = "Aniel",
+            Email = "nath@aniel.com",
+            Roles = new List<string> { "User" }
+        };
+        
+        var createResponse = await _client.PostAsJsonAsync(HttpHelper.Urls.AddUser, createRequest);
+        
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var createResponseContent = await createResponse.Content.ReadAsStringAsync();
+        var deserializedObjectResult = JsonConvert.DeserializeObject<Result>(createResponseContent);
+        Assert.True(deserializedObjectResult?.flag);
+        Assert.Equal(200, deserializedObjectResult?.code);
+        Assert.Equal("A new user has been created", deserializedObjectResult?.message);
+        var responseData = deserializedObjectResult?.data;
+        _testOutputHelper.WriteLine(responseData?.ToString());
+        var userDetails = JsonConvert.DeserializeObject<UserDto>(responseData.ToString());
+        var userId = userDetails?.Id;
+        
+        //Login as the user to change password
+        var nathLoginRequest = new
+        {
+            userName = "nathaniel", password = "Nath123!"
+
+        };
+        var content = new StringContent(JsonConvert.SerializeObject(nathLoginRequest), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        //extract token from data
+        var responseString = await response.Content.ReadAsStringAsync();
+        var deserializeObject = JsonConvert.DeserializeObject<Result>(responseString);
+        var nathToken = deserializeObject.data.ToString();
+        
+        //Act
+        //change password
+        var changePasswordRequest = new Dictionary<string, string>()
+        {
+            {"currentPassword", "Nath123!"},
+            {"newPassword", "Nath12345!"},
+            {"confirmPassword", "Nath123456!"} //confirm password does not match new password
+        };
+        
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", nathToken);
+        var changePasswordResponse = await _client.PatchAsJsonAsync(HttpHelper.Urls.ChangePassword(userId), changePasswordRequest);
+        
+        //Assert
+        changePasswordResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var jsonString = await changePasswordResponse.Content.ReadAsStringAsync();
+        var deObject = JsonConvert.DeserializeObject<Result>(jsonString);
+        Assert.False(deObject?.flag);
+        Assert.Equal(400, deObject?.code);
+        Assert.Equal("New password and confirm password do not match.", deObject?.message);
+    }
+
+    [Fact]
+    public async Task TestPasswordChangeWithNewPasswordSameAsOldPassword()
+    {
+        //Arrange
+        if (string.IsNullOrEmpty(_tokenAdmin))
+        {
+            await AuthenticateAsyncAsAdmin();
+        }
+
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenAdmin);
+
+        //create user whose password will be changed
+        var createRequest = new RegistrationRequestDto()
+        {
+            Username = "kinggy",
+            Password = "King123!",
+            FirstName = "King",
+            LastName = "Daniel",
+            Email = "King@Daniel.com",
+            Roles = new List<string> { "User" }
+        };
+        
+        var createResponse = await _client.PostAsJsonAsync(HttpHelper.Urls.AddUser, createRequest);
+        
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var createResponseContent = await createResponse.Content.ReadAsStringAsync();
+        var deserializedObjectResult = JsonConvert.DeserializeObject<Result>(createResponseContent);
+        Assert.True(deserializedObjectResult?.flag);
+        Assert.Equal(200, deserializedObjectResult?.code);
+        Assert.Equal("A new user has been created", deserializedObjectResult?.message);
+        var responseData = deserializedObjectResult?.data;
+        _testOutputHelper.WriteLine(responseData?.ToString());
+        var userDetails = JsonConvert.DeserializeObject<UserDto>(responseData.ToString());
+        var userId = userDetails?.Id;
+        
+        //Login as the user to change password
+        var kingLoginRequest = new
+        {
+            userName = "kinggy", password = "King123!"
+
+        };
+        var content = new StringContent(JsonConvert.SerializeObject(kingLoginRequest), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        //extract token from data
+        var responseString = await response.Content.ReadAsStringAsync();
+        var deserializeObject = JsonConvert.DeserializeObject<Result>(responseString);
+        var kingToken = deserializeObject.data.ToString();
+        
+        //Act
+        //change password
+        var changePasswordRequest = new Dictionary<string, string>()
+        {
+            {"currentPassword", "King123!"},
+            {"newPassword", "King123!"}, //new password is same as old password
+            {"confirmPassword", "King123!"}
+          
+        };
+        
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", kingToken);
+        var changePasswordResponse = await _client.PatchAsJsonAsync(HttpHelper.Urls.ChangePassword(userId), changePasswordRequest);
+        
+        //Assert
+        changePasswordResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var jsonString = await changePasswordResponse.Content.ReadAsStringAsync();
+        var deObject = JsonConvert.DeserializeObject<Result>(jsonString);
+        Assert.False(deObject?.flag);
+        Assert.Equal(400, deObject?.code);
+        Assert.Equal("New password cannot be the same as the old password.", deObject?.message);
+    }
+
+    [Fact]
+    public async Task TestChangePasswordNewPasswordDoesNotMeetPolicy()
+    {
+        
+        //Arrange
+        if (string.IsNullOrEmpty(_tokenAdmin))
+        {
+            await AuthenticateAsyncAsAdmin();
+        }
+
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenAdmin);
+
+        //create user whose password will be changed
+        var createRequest = new RegistrationRequestDto()
+        {
+            Username = "Fredrick",
+            Password = "Fred123!",
+            FirstName = "Fred",
+            LastName = "Dan",
+            Email = "Fred@Dan.com",
+            Roles = new List<string> { "User" }
+        };
+        
+        var createResponse = await _client.PostAsJsonAsync(HttpHelper.Urls.AddUser, createRequest);
+        
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var createResponseContent = await createResponse.Content.ReadAsStringAsync();
+        var deserializedObjectResult = JsonConvert.DeserializeObject<Result>(createResponseContent);
+        Assert.True(deserializedObjectResult?.flag);
+        Assert.Equal(200, deserializedObjectResult?.code);
+        Assert.Equal("A new user has been created", deserializedObjectResult?.message);
+        var responseData = deserializedObjectResult?.data;
+        _testOutputHelper.WriteLine(responseData?.ToString());
+        var userDetails = JsonConvert.DeserializeObject<UserDto>(responseData.ToString());
+        var userId = userDetails?.Id;
+        
+        //Login as the user to change password
+        var kingLoginRequest = new
+        {
+            userName = "Fredrick", password = "Fred123!"
+
+        };
+        var content = new StringContent(JsonConvert.SerializeObject(kingLoginRequest), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("/api/v1/auth/login", content);
+        response.EnsureSuccessStatusCode();
+        //extract token from data
+        var responseString = await response.Content.ReadAsStringAsync();
+        var deserializeObject = JsonConvert.DeserializeObject<Result>(responseString);
+        var fredToken = deserializeObject.data.ToString();
+        
+        //Act
+        //change password
+        var changePasswordRequest = new Dictionary<string, string>()
+        {
+            {"currentPassword", "Fred123!"},
+            {"newPassword", "Fred123"}, //new password does not meet policy
+            {"confirmPassword", "Fred123"}
+        };
+        
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", fredToken);
+        var changePasswordResponse = await _client.PatchAsJsonAsync(HttpHelper.Urls.ChangePassword(userId), changePasswordRequest);
+        
+        //Assert
+        changePasswordResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var jsonString = await changePasswordResponse.Content.ReadAsStringAsync();
+        var deObject = JsonConvert.DeserializeObject<Result>(jsonString);
+        Assert.False(deObject?.flag);
+        Assert.Equal(400, deObject?.code);
+        Assert.Equal("New password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be between 8 and 15 characters long.", deObject?.message);
+    }
+
 
 }
