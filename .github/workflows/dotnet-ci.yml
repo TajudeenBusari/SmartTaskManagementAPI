@@ -1,0 +1,26 @@
+name: .NET CI
+on:
+  pull_request: 
+    branches:
+      - master
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      #Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      #Check set up .NET Core SDK
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.100
+      #Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore
+      #Build the project
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+      #Run tests
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal

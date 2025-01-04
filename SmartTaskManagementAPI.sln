@@ -11,6 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTaskManagementUnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTaskIntegrationTest", "SmartTaskIntegrationTest\SmartTaskIntegrationTest.csproj", "{1F079A43-E001-4B99-8D2F-2D9310FE1A27}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{91A90F92-7CF7-4416-962E-260342641B39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{620D0280-71D4-4671-9767-9EAD409B2470}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet-ci.yml = .github\workflows\dotnet-ci.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +36,8 @@ Global
 		{1F079A43-E001-4B99-8D2F-2D9310FE1A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F079A43-E001-4B99-8D2F-2D9310FE1A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F079A43-E001-4B99-8D2F-2D9310FE1A27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{620D0280-71D4-4671-9767-9EAD409B2470} = {91A90F92-7CF7-4416-962E-260342641B39}
 	EndGlobalSection
 EndGlobal
