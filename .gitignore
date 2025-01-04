@@ -13,6 +13,11 @@ bin/
 *.pdb
 *.cache
 *.sourcelink.json
+*.props
+*.info
+*.cs
+*dgspec.json
+*.BuildWithSkipAnalyzers
 
 # Dotnet-specific files
 *.user

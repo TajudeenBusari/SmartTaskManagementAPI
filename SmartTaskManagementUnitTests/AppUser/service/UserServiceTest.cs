@@ -565,7 +565,7 @@ public class UserServiceTest
         //Act and Assert
         var exception = await Assert.ThrowsAsync<PasswordChangeIllegalArgument>(() => 
             userService.ChangePasswordAsync(existingUserId, correctOldPassword, newPassword, confirmPassword));
-        Assert.Equal("New password and confirm new password do not match.", exception.Message);
+        Assert.Equal("New password and confirm password do not match.", exception.Message);
         _mockUserManager.Verify(m => m.FindByIdAsync(existingUserId), Times.Once);
         _mockUserManager.Verify(m => m.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
         
