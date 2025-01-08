@@ -1,13 +1,16 @@
+# Build directories
+bin/
 obj/
+
+# Rider and IntelliJ-related files
 .idea/
 *.Rider/
 _ReSharper.Caches/
-bin/
 *.iml
 *.ipr
 *.iws
 
-# Ignore specific file types generated during builds
+# Build artifacts
 *.dll
 *.exe
 *.pdb
@@ -19,11 +22,11 @@ bin/
 *dgspec.json
 *.BuildWithSkipAnalyzers
 
-# Dotnet-specific files
+# Dotnet-specific files and directories
 *.user
-*.vs/
+.vs/
 SmartTaskManagementAPI/obj/
 
-# Ignore bin and obj directories
+# Ignore bin and obj directories in any location
 **/bin/
 **/obj/
