@@ -22,3 +22,4 @@ bin/
 # Dotnet-specific files
 *.user
 *.vs/
+SmartTaskManagementAPI/obj/
