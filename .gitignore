@@ -23,3 +23,7 @@ bin/
 *.user
 *.vs/
 SmartTaskManagementAPI/obj/
+
+# Ignore bin and obj directories
+**/bin/
+**/obj/
