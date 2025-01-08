@@ -4,13 +4,17 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Moq;
 using SmartTaskManagementAPI.AppUser.controller;
 using SmartTaskManagementAPI.AppUser.mapper;
 using SmartTaskManagementAPI.AppUser.models;
 using SmartTaskManagementAPI.AppUser.models.dto;
 using SmartTaskManagementAPI.AppUser.service.impl;
+using SmartTaskManagementAPI.Client;
 using SmartTaskManagementAPI.System;
+using StackExchange.Redis;
 
 namespace SmartTaskManagementAPITest.AppUser.controller;
 
@@ -21,13 +25,37 @@ public class AppUserControllerTest
     private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
     private readonly UserMapper _userMapper;
     private readonly List<ApplicationUser> _users;
+   // private readonly Mock<RedisCacheClient> _cacheClientMock;
+   private readonly Mock<ILogger<RedisCacheClient>> _mockLogger;
+   private readonly Mock<IConnectionMultiplexer> _mockConnectionMultiplexer;
+   private readonly Mock<IConfiguration> _mockConfiguration;
+   private readonly Mock<IDatabase> _redisDatabaseMock;
+   
 
     //set up method runs before each test
     public AppUserControllerTest()
     {
         // Mock IUserService
         _userServiceMock = new Mock<IUserService>();
+        // Mock RedisCacheClient dependencies
+        _mockConnectionMultiplexer = new Mock<IConnectionMultiplexer>();
+        _redisDatabaseMock = new Mock<IDatabase>();
+        _mockConnectionMultiplexer.Setup(m => 
+                m.GetDatabase(It.IsAny<int>(), null))
+            .Returns(_redisDatabaseMock.Object);
+        _mockLogger = new Mock<ILogger<RedisCacheClient>>();
+        //mock configuration
+        _mockConfiguration = new Mock<IConfiguration>();
+        _mockConfiguration.Setup(c => c["Jwt:Issuer"]).Returns("TestIssuer");
+        _mockConfiguration.Setup(c => c["Jwt:Audience"]).Returns("TestAudience");
+        _mockConfiguration.Setup(c => c["Jwt:signInKey"]).Returns("TestSigningKey");
         
+        
+        // Corrected RedisCacheClient initialization
+        var mockRedisClientMock = new RedisCacheClient(
+            _mockConnectionMultiplexer.Object,
+            _mockConfiguration.Object,
+            _mockLogger.Object);
         _userMapper = new UserMapper();
         
         // Mock UserManager<ApplicationUser>
@@ -35,7 +63,7 @@ public class AppUserControllerTest
         _userManagerMock = new Mock<UserManager<ApplicationUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
         
         // Initialize the UserController
-        _userController = new UserController(_userServiceMock.Object, _userManagerMock.Object);
+        _userController = new UserController(_userServiceMock.Object, _userManagerMock.Object, mockRedisClientMock);
         
         // Simulate Admin authentication for the test
         var adminUser = new ClaimsPrincipal(new ClaimsIdentity(new[]

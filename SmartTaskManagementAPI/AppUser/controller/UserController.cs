@@ -6,6 +6,7 @@ using SmartTaskManagementAPI.AppUser.mapper;
 using SmartTaskManagementAPI.AppUser.models;
 using SmartTaskManagementAPI.AppUser.models.dto;
 using SmartTaskManagementAPI.AppUser.service.impl;
+using SmartTaskManagementAPI.Client;
 using SmartTaskManagementAPI.System;
 
 namespace SmartTaskManagementAPI.AppUser.controller;
@@ -18,12 +19,14 @@ public class UserController: ControllerBase
     private readonly IUserService _userService;
     private readonly UserMapper _userMapper;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly RedisCacheClient _redisCacheClient;
 
-    public UserController(IUserService userService, UserManager<ApplicationUser> userManager)
+    public UserController(IUserService userService, UserManager<ApplicationUser> userManager, RedisCacheClient redisCacheClient)
     {
         _userService = userService;
         _userManager = userManager;
         _userMapper = new UserMapper();
+        _redisCacheClient = redisCacheClient;
     }
 
     /// <summary>
@@ -114,6 +117,7 @@ public class UserController: ControllerBase
     [Authorize]
     public async Task<ActionResult<Result>> UpdateUser([FromRoute] string userId, [FromBody] UpdateRequestDto request)
     {
+        
         var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var currentUserRole = User.FindFirstValue(ClaimTypes.Role);
         if (currentUserRole == "Admin" || currentUserId == userId)
@@ -122,6 +126,13 @@ public class UserController: ControllerBase
             var roles = await _userManager.GetRolesAsync(updatedUser);
             var userDto = _userMapper.MapFromAppUserToUserDto(updatedUser);
             userDto.Roles = roles;
+
+            if (currentUserRole == "Admin")
+            {
+                var key = $"whitelist:{userId}";
+                await _redisCacheClient.RemoveAsync(key);
+            }
+            
             return Ok(new Result(true, System.StatusCode.SUCCESS, "Update Success", userDto));
         }
         
@@ -169,6 +180,10 @@ public class UserController: ControllerBase
 /***
  * {
   "username": "admin",
-  "password": "Admin123!" //updated to Admin12345!
+  "password": "Admin123!" //updated to Admin1234!
+  username: "ben"
+  "password": User1234!
+  bf37fc4e-5e0d-4fb5-b3fb-3347e6d8ba9a
   }
  */
+

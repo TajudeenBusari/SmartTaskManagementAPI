@@ -20,7 +20,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using SmartTaskManagementAPI.Authentication.AuthorizationHandler;
+using SmartTaskManagementAPI.Client;
 using SmartTaskManagementAPI.System;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +77,39 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 });
+
+//Register Redis configuration
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var redisConfig = builder.Configuration.GetSection("Redis:ConnectionString").Value;
+    return ConnectionMultiplexer.Connect(redisConfig);
+});
+
+// Register RedisCacheClient as a Singleton with ILogger
+builder.Services.AddSingleton<RedisCacheClient>(sp =>
+{
+    var connectionMultiplexer = sp.GetRequiredService<IConnectionMultiplexer>();
+    var config = sp.GetRequiredService<IConfiguration>();
+    var logger = sp.GetRequiredService<ILogger<RedisCacheClient>>();
+    return new RedisCacheClient(connectionMultiplexer, config, logger);
+
+});
+
+//Register SymmetricSecurityKey
+builder.Services.AddSingleton(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var key = Encoding.UTF8.GetBytes(configuration["Jwt:signInKey"]);
+    return new SymmetricSecurityKey(key);
+
+});
+
+//Add service to the container
+//builder.Services.AddScoped<RedisCacheClient>();
+builder.Services.AddSingleton<RedisCacheClient>();
+
+//Register JwtInterceptor
+//builder.Services.AddTransient<JwtInterceptor>();
 
 //Register TaskManagement Repository in the DI container
 builder.Services.AddScoped<ITaskManagementRepository, TaskManagementRepository>();
@@ -181,8 +216,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//register middleware
+//add middlewares before app.UseAuthorization()
+//register middleware for exception
 app.UseMiddleware<ExceptionHandlingMiddleware>();  // Register the custom middleware
+
+//Add middle to intercept all requests for token validation
+app.UseMiddleware<JwtInterceptor>();
+
 
 
 //for authorization and authentication
