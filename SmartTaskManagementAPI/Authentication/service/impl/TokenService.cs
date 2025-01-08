@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using SmartTaskManagementAPI.AppUser.models;
 using SmartTaskManagementAPI.AppUser.models.dto;
+using SmartTaskManagementAPI.Client;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace SmartTaskManagementAPI.Authentication.service.impl;
@@ -12,13 +13,15 @@ public class TokenService: ITokenService
 {
     private readonly IConfiguration _configuration;
     private readonly SymmetricSecurityKey _symmetricSecuritykey;
+    private readonly RedisCacheClient _redisCacheClient;
     
-    public TokenService(IConfiguration configuration)
+    public TokenService(IConfiguration configuration, RedisCacheClient redisCacheClient)
     {
         _configuration = configuration;
         _symmetricSecuritykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:signInKey"]));
+        _redisCacheClient = redisCacheClient;
     }
-    public string GenerateToken(ApplicationUser user, IList<string> roles)
+    public async Task <string> GenerateToken(ApplicationUser user, IList<string> roles)
     {
         
         //create claim
@@ -33,26 +36,22 @@ public class TokenService: ITokenService
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
         
         var signInCredentials = new SigningCredentials(_symmetricSecuritykey, SecurityAlgorithms.HmacSha256);
-        var tokenDescriptor = new SecurityTokenDescriptor(
-            
-            //JwtSecurityToken
-            /*issuer: _configuration["Jwt:issuer"],
-            audience: _configuration["Jwt:audience"],
-            //subject: claims,
-            claims: claims,
-            expires: DateTime.Now.AddMinutes(30),
-            signingCredentials: signInCredentials*/
-        )
+        var tokenDescriptor = new SecurityTokenDescriptor()
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddMinutes(30),
-            Audience = _configuration["Jwt:audience"],
-            Issuer = _configuration["Jwt:issuer"],
+            Expires = DateTime.UtcNow.AddMinutes(60),
+            Audience = _configuration["Jwt:Audience"],
+            Issuer = _configuration["Jwt:Issuer"],
             SigningCredentials = signInCredentials
         };
-        //return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+        
+        //Generate token
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+       var tokenString = tokenHandler.WriteToken(token);
+       //var redisKey = $"whitelist:{user.Id}"; //$"whiteList:{userId}"
+       var redisKey = "whitelist:" + user.Id;
+       await _redisCacheClient.SetAsync(redisKey, tokenString, TimeSpan.FromMinutes(60));
+       return tokenString;
     }
 }

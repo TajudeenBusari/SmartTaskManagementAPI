@@ -37,7 +37,7 @@ public class AuthController: ControllerBase
         if (result.Succeeded)
         {
             var roles = await _userManager.GetRolesAsync(user);
-            var token = _tokenService.GenerateToken(user, roles);
+            var token = await _tokenService.GenerateToken(user, roles);
             return Ok(new Result(true, System.StatusCode.SUCCESS, "Login Success", token));
         }
 

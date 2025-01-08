@@ -6,7 +6,7 @@ namespace SmartTaskManagementAPI.Authentication.service;
 public interface ITokenService
 {
     
-    string GenerateToken(ApplicationUser user, IList<string> roles);
+    Task <string> GenerateToken(ApplicationUser user, IList<string> roles);
     
     
     /*Task<RegistrationRequestDto> Register(RegistrationRequestDto registrationRequestDto);

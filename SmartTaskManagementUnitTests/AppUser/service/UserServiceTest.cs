@@ -4,17 +4,24 @@ using FluentAssertions;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using MockQueryable;
 using Moq;
 using SmartTaskManagementAPI.AppUser.models;
 using SmartTaskManagementAPI.AppUser.models.dto;
 using SmartTaskManagementAPI.AppUser.service;
+using SmartTaskManagementAPI.Client;
 using SmartTaskManagementAPI.Exceptions;
 using SmartTaskManagementAPI.Exceptions.modelNotFound;
+using StackExchange.Redis;
+
 
 namespace SmartTaskManagementAPITest.AppUser.service;
-
+/// <summary>
+/// We are using the real instance of RedisCachClient and mocking its parameters
+/// Ensure, Redis instance is running in Docker
+/// </summary>
 [TestSubject(typeof(UserService))]
 public class UserServiceTest
 {
@@ -22,12 +29,40 @@ public class UserServiceTest
     private readonly Mock<UserManager<ApplicationUser>> _mockUserManager;
     private readonly Mock<RoleManager<IdentityRole>> _mockRoleManager;
     private readonly List<ApplicationUser> _users;
+    private readonly Mock<ILogger<RedisCacheClient>> _mockLogger;
+    private readonly Mock<IConnectionMultiplexer> _mockConnectionMultiplexer;
+    private readonly Mock<IConfiguration> _mockConfiguration;
+    private readonly Mock<IDatabase> _redisDatabaseMock;
 
     public UserServiceTest()
     {
         _mockUserManager = MockUserManager();
         _mockRoleManager = MockRoleManager();
-        userService = new UserService(_mockUserManager.Object, _mockRoleManager.Object);
+        
+        // Mock RedisCacheClient dependencies
+        _mockConnectionMultiplexer = new Mock<IConnectionMultiplexer>();
+        _redisDatabaseMock = new Mock<IDatabase>();
+        _mockConnectionMultiplexer.Setup(m => 
+            m.GetDatabase(It.IsAny<int>(), null))
+            .Returns(_redisDatabaseMock.Object);
+        _mockLogger = new Mock<ILogger<RedisCacheClient>>();
+        //mock configuration
+        _mockConfiguration = new Mock<IConfiguration>();
+        _mockConfiguration.Setup(c => c["Jwt:Issuer"]).Returns("TestIssuer");
+        _mockConfiguration.Setup(c => c["Jwt:Audience"]).Returns("TestAudience");
+        _mockConfiguration.Setup(c => c["Jwt:signInKey"]).Returns("TestSigningKey");
+        
+        
+        
+        // Corrected RedisCacheClient initialization
+        var mockRedisClientMock = new RedisCacheClient(
+            _mockConnectionMultiplexer.Object,
+            _mockConfiguration.Object,
+            _mockLogger.Object);
+        
+        
+        // Instantiate the UserService with mocked dependencies
+        userService = new UserService(_mockUserManager.Object, _mockRoleManager.Object, mockRedisClientMock);
         
         _users = new List<ApplicationUser>();
         var userHasher1 = new PasswordHasher<ApplicationUser>();
@@ -52,12 +87,14 @@ public class UserServiceTest
         
     }
     
+    // Mock UserManager
     private static Mock<UserManager<ApplicationUser>> MockUserManager()
     {
         var store = new Mock<IUserStore<ApplicationUser>>();
         return new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
     }
 
+    // Mock RoleManager
     private static Mock<RoleManager<IdentityRole>> MockRoleManager()
     {
         var store = new Mock<IRoleStore<IdentityRole>>();
