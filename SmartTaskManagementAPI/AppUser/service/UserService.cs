@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartTaskManagementAPI.AppUser.models;
 using SmartTaskManagementAPI.AppUser.models.dto;
 using SmartTaskManagementAPI.AppUser.service.impl;
+using SmartTaskManagementAPI.Client;
 using SmartTaskManagementAPI.Data;
 using SmartTaskManagementAPI.Exceptions;
 using SmartTaskManagementAPI.Exceptions.modelNotFound;
@@ -18,12 +19,14 @@ public class UserService: IUserService
      */
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RedisCacheClient _redisCacheClient;
     
 
-    public UserService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public UserService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, RedisCacheClient redisCacheClient)
     {
         _userManager = userManager;
         _roleManager = roleManager;
+        _redisCacheClient = redisCacheClient;
         
     }
     
@@ -118,6 +121,7 @@ public class UserService: IUserService
         user.LastName = updateRequestDto.LastName;
         user.Email = updateRequestDto.Email;
         user.UserName = updateRequestDto.Username;
+        
         var result = await _userManager.UpdateAsync(user);
         if (!result.Succeeded)
         {
@@ -176,9 +180,16 @@ public class UserService: IUserService
             throw new PasswordChangeIllegalArgument("New password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be between 8 and 15 characters long.");
         }
         
+        
+        
         // Update the user's password
         var passwordHash = passwordHasher.HashPassword(user, newPassword);
         user.PasswordHash = passwordHash;
+        
+        //Revoke this user's current JWT by deleting from RedisCache before updating
+        var tokenKey = $"whitelist:{userId}";
+        await _redisCacheClient.RemoveAsync(tokenKey);
+        
         var result = await _userManager.UpdateAsync(user);
         if (!result.Succeeded)
         {
